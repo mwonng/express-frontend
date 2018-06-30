@@ -15,10 +15,11 @@ injectGlobal`
 `;
 
 export default class MyDocument extends Document {
-  static getInitialProps ({ renderPage }) {
+  static getInitialProps ({ renderPage, res }) {
     const sheet = new ServerStyleSheet()
     const page = renderPage(App => props => sheet.collectStyles(<App {...props} />))
     const styleTags = sheet.getStyleElement()
+    res.setHeader('X-Author', 'Michael Wonng')
     return { ...page, styleTags }
   }
 
