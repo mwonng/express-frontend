@@ -3,9 +3,9 @@ import Router from 'next/router'
 
 class Index extends React.Component {
   static async getInitialProps({ req,res }) {
-    const userAgent = req ? req.headers['user-agent'] : navigator.userAgent
-    const host = req ? req.headers['host']: "no host"
-
+    // const userAgent = req ? req.headers['user-agent'] : navigator.userAgent
+    // const host = req ? req.headers['host']: "no host"
+    // res.setHeader('X-Author', 'Michael Wonng')
     // if (res) {
     //   res.writeHead(302, {
     //     Location: '/login'
@@ -15,7 +15,11 @@ class Index extends React.Component {
     // } else {
     //   Router.push('http://google.com')
     // }
-    return {userAgent, host}
+    return {}
+  }
+
+  componentDidMount() {
+    localStorage.setItem('token', 'THIS-IS')
   }
 
   render() {
