@@ -19,7 +19,7 @@ export default class MyDocument extends Document {
     const sheet = new ServerStyleSheet()
     const page = renderPage(App => props => sheet.collectStyles(<App {...props} />))
     const styleTags = sheet.getStyleElement()
-    res.setHeader('X-Author', 'Michael Wonng')
+    // var test = localStorage.getItem('token')
     return { ...page, styleTags }
   }
 

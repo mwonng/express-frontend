@@ -1,6 +1,11 @@
 import LoginForm from '../components/LoginForm'
 
 class Login extends React.Component {
+  componentDidMount() {
+    const token = localStorage.getItem('token')
+    console.log(token)
+  }
+
   render() {
     return (
       <div>
