@@ -5,11 +5,15 @@ import AuthService from '../utils/AuthService'
 const Auth = new AuthService('http://localhost:3001')
 import Link from 'next/link'
 import fetch from 'isomorphic-fetch';
+import axios from 'axios'
+
+
+axios.defaults.headers.common['Authorization'] = "LOOKINGATME!!";
 
 class Index extends React.Component {
   static async getInitialProps({ req,res }) {
-    const userAgent = req ? req.headers['user-agent'] : navigator.userAgent
-    const host = req ? req.headers['host']: "no host"
+    // const userAgent = req ? req.headers['user-agent'] : navigator.userAgent
+    // const host = req ? req.headers['host']: "no host"
 
     // res.setHeader('X-Author', 'Michael Wonng')
     // if (res) {
@@ -31,25 +35,30 @@ class Index extends React.Component {
     this.setState({token}, ()=>{
       console.log(this.state)
     })
+    axios({
+      method: 'post',
+      url: '/admin',
+      data: {key: "value", authorization: "in body"}
+    })
   }
 
   constructor(props) {
     super(props)
     // const token = Auth.getToken()
     this.state = {token: ""}
-    fetch('https://api.github.com/users/mwonng/repos')
-    .then( (res) => {
-      if (res.status >= 400) {
-        // throw new Error("Bad response from server");
-        console.log("Bad response from server")
-        Router.push('/login')
-      }
-      return res.json();
-    })
-    .then( (repos) => {
-      // console.log(stories);
-      this.setState({result:repos})
-    })
+    // fetch('https://api.github.com/users/mwonng/repos')
+    // .then( (res) => {
+    //   if (res.status >= 400) {
+    //     // throw new Error("Bad response from server");
+    //     console.log("Bad response from server")
+    //     Router.push('/login')
+    //   }
+    //   return res.json();
+    // })
+    // .then( (repos) => {
+    //   // console.log(stories);
+    //   this.setState({result:repos})
+    // })
   }
 
   render() {

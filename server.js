@@ -20,7 +20,14 @@ app.prepare()
     // })
 
     // middleware for authentication
-    server.use('/login', mwAuth)
+    // server.post('/admin', mwAuth)
+    // server.post('/admin', (req, res, next) => {
+    //   var token = (req.body && req.body.authorization) || (req.query && req.query.authorization) || req.headers.authorization
+    //   console.log("header is:", req.headers.authorization)
+    //   // res.send({result: "response"})
+    //   next()
+    // })
+    server.post('/admin', mwAuth)
 
     server.get('*', (req, res) => {
       return handle(req, res)
