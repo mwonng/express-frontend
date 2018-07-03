@@ -2,7 +2,7 @@ import LoginForm from '../components/LoginForm'
 
 class Login extends React.Component {
   componentDidMount() {
-    const token = localStorage.getItem('token')
+    const token = localStorage.getItem('id_token')
     console.log(token)
   }
 
@@ -16,7 +16,5 @@ class Login extends React.Component {
     );
   }
 }
-
-
 
 export default Login

@@ -10,6 +10,7 @@ class Index extends React.Component {
   static async getInitialProps({ req,res }) {
     const userAgent = req ? req.headers['user-agent'] : navigator.userAgent
     const host = req ? req.headers['host']: "no host"
+
     // res.setHeader('X-Author', 'Michael Wonng')
     // if (res) {
     //   res.writeHead(302, {
@@ -45,24 +46,32 @@ class Index extends React.Component {
       }
       return res.json();
     })
-    .then(function(stories) {
-      console.log(stories);
-      return {result: stories}
+    .then( (repos) => {
+      // console.log(stories);
+      this.setState({result:repos})
     })
   }
 
   render() {
-    console.log(this.props.result)
     return(
       <div>
         <p>Hello Next.jsx, time {this.props.host}</p>
         <p>State:</p>
         <p>token: {this.state.token}</p>
-        Click{' '}
-        <Link href="/login" replace>
-          <a>here</a>
-        </Link>{' '}
-        to read more
+        <p>
+          Click{' '}
+          <Link href="/login" replace>
+            <a>here</a>
+          </Link>{' '}
+          to replace
+        </p>
+        <p>
+          Click{' '}
+          <Link href="/login">
+            <a>here</a>
+          </Link>{' '}
+          to redirect more
+        </p>
       </div>
     )
   }
