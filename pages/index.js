@@ -37,15 +37,26 @@ class Index extends React.Component {
     })
     axios({
       method: 'post',
-      url: '/admin',
-      data: {key: "value", authorization: "in body"}
+      url: 'http://localhost:3000/auth',
+      data: {email: "michael", password: "111"}
+    })
+    .then( result => {
+      console.log("result:", result)
+      this.setState({
+        result: result.data.success? "yes":"no",
+        isLoading: false
+      })
     })
   }
 
   constructor(props) {
     super(props)
     // const token = Auth.getToken()
-    this.state = {token: ""}
+    this.state = {
+      token: "",
+      result: "init",
+      laoding: true
+    }
     // fetch('https://api.github.com/users/mwonng/repos')
     // .then( (res) => {
     //   if (res.status >= 400) {
@@ -67,6 +78,7 @@ class Index extends React.Component {
         <p>Hello Next.jsx, time {this.props.host}</p>
         <p>State:</p>
         <p>token: {this.state.token}</p>
+        <p>result: {this.state.result}</p>
         <p>
           Click{' '}
           <Link href="/login" replace>
