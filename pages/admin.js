@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import Router from 'next/router'
 
 class Admin extends Component {
   constructor(props) {
@@ -31,10 +32,10 @@ class Admin extends Component {
           isLoading: false,
           isLogin: false
         })
+        Router.push('/login')
       }
     })
   }
-
 
   render() {
     if (this.state.isLoading) {

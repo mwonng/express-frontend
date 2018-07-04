@@ -35,30 +35,17 @@ class Index extends React.Component {
     this.setState({token}, ()=>{
       console.log(this.state)
     })
-    axios({
-      method: 'post',
-      url: '/admin',
-      data: {key: "value", authorization: "in body"}
-    })
+    console.log(".env", process.env.END_POINT );
+    // axios({
+    //   method: 'post',
+    //   url: '/admin',
+    //   data: {key: "value", authorization: "in body"}
+    // })
   }
 
   constructor(props) {
     super(props)
-    // const token = Auth.getToken()
     this.state = {token: ""}
-    // fetch('https://api.github.com/users/mwonng/repos')
-    // .then( (res) => {
-    //   if (res.status >= 400) {
-    //     // throw new Error("Bad response from server");
-    //     console.log("Bad response from server")
-    //     Router.push('/login')
-    //   }
-    //   return res.json();
-    // })
-    // .then( (repos) => {
-    //   // console.log(stories);
-    //   this.setState({result:repos})
-    // })
   }
 
   render() {
