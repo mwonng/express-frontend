@@ -13,19 +13,21 @@ class LoginForm extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      username: "",
+      email: "",
       password: ""
     }
   }
 
   handleChange = (event) => {
     event.preventDefault()
-    console.log(event.target)
+    // console.log(event.target)
     this.setState({[event.target.id]: event.target.value})
   }
 
   postData = () => {
     console.log(this.state)
+    console.log(this.props.text)
+    this.props.handleSubmit(this.state)
   }
 
   render() {
@@ -35,9 +37,9 @@ class LoginForm extends React.Component {
         <Panel>
           <p>Panel</p>
           <TextField
-            id="username"
+            id="email"
             label="Email"
-            class="username"
+            class="email"
             disable={true}
             onChange={this.handleChange}
           ></TextField>

@@ -27,7 +27,7 @@ app.prepare()
     //   // res.send({result: "response"})
     //   next()
     // })
-    server.post('/admin', mwAuth)
+    // server.all('/admin', mwAuth)
 
     server.get('*', (req, res) => {
       return handle(req, res)
