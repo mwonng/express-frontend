@@ -24,8 +24,7 @@ class LoginForm extends React.Component {
   }
 
   postData = () => {
-    console.log(this.state)
-    console.log(this.props.text)
+    console.log("LoginForm - post Data",this.state)
     this.props.handleSubmit(this.state)
   }
 
