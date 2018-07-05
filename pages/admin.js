@@ -13,11 +13,11 @@ class Admin extends Component {
   }
 
   componentDidMount() {
-    axios.defaults.headers.common['Authorization'] =  localStorage.getItem('express_frontend_token');
+    axios.defaults.headers.common['Authorization'] =  localStorage.getItem(process.env.TOKEN_KEY);
     axios({
       method: 'post',
       url: 'http://localhost:3000/auth/token',
-      data: {sendToken: localStorage.getItem('express_frontend_token') }
+      data: {sendToken: localStorage.getItem(process.env.TOKEN_KEY)}
     })
     .then(response => {
       if (response.data.success) {
@@ -39,20 +39,17 @@ class Admin extends Component {
 
   render() {
     if (this.state.isLoading) {
-      console.log(this.state)
       return (
         <div> Loading ...</div>
       )
     }
     if (!this.state.isLoading && this.state.isLogin) {
-      console.log(this.state)
       return (
         <div>
           Admin page
         </div>
       );
     }
-    console.log(this.state)
     return (
       <div>
         Please login

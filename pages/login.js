@@ -1,15 +1,17 @@
 import LoginForm from '../components/LoginForm'
-import axios from 'axios';
+import axios from 'axios'
+import AuthService from '../utils/AuthService'
+import Router from 'next/router'
+
+const Auth = new AuthService('http://localhost:3000')
 
 class Login extends React.Component {
   componentDidMount() {
-    const token = localStorage.getItem('id_token')
-    console.log(token)
+
   }
 
   handleSubmit = (formObj) => {
-    console.log("Hey, im in Login.js, not LoginFrom Component")
-    axios.defaults.headers.common['Authorization'] = "LOOKINGATME!!";
+    axios.defaults.headers.common['Authorization'] = Auth.getToken();
     axios({
       method: 'post',
       url: 'http://localhost:3000/auth',
@@ -17,11 +19,13 @@ class Login extends React.Component {
     })
     .then(response => {
       if (response.data.success) {
-        localStorage.setItem('express_frontend_token', response.data.token)
+        localStorage.setItem(process.env.TOKEN_KEY, response.data.token)
+        sessionStorage.setItem(process.env.SESSION_KEY, response.data.token)
         console.log("response token:", response.data.token)
+        Router.push('/admin')
       } else {
-        localStorage.setItem('express_frontend_token','n/a')
-        console.log("failed")
+        localStorage.setItem(process.env.TOKEN_KEY,'n/a')
+        console.log(" if not success failed")
       }
     })
   }

@@ -45,14 +45,17 @@ class Index extends React.Component {
 
   constructor(props) {
     super(props)
-    this.state = {token: ""}
+    this.state = {
+      page: "4e",
+      token: ""
+    }
   }
 
   render() {
     return(
       <div>
         <p>Hello Next.jsx, time {this.props.host}</p>
-        <p>State:</p>
+        <p>State: {JSON.stringify(this.state)}</p>
         <p>token: {this.state.token}</p>
         <p>
           Click{' '}
