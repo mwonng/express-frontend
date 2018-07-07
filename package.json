@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "node server.js",
     "build": "next build",
-    "start": "yarn build && NODE_ENV=production node server.js"
+    "start": "yarn build && NODE_ENV=production node server.js",
+    "start-pm2": "NODE_ENV=production pm2 start ./server.js --name react"
   },
   "dependencies": {
     "axios": "^0.18.0",

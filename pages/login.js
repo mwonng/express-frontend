@@ -2,7 +2,9 @@ import LoginForm from '../components/LoginForm'
 import axios from 'axios'
 import AuthService from '../utils/AuthService'
 import Router from 'next/router'
-const Auth = new AuthService('http://localhost:3000')
+
+const ENDPOINT = process.env.NODE_ENV === 'production'?process.env.ENDPOINT:process.env.DEV_END_POINT
+const Auth = new AuthService(ENDPOINT)
 
 
 class Login extends React.Component {
