@@ -1,8 +1,8 @@
 import React from 'react'
 import Router from 'next/router'
 import AuthService from '../utils/AuthService'
-
-const Auth = new AuthService('http://localhost:3001')
+const FRONT_ENDPOINT = process.env.NODE_ENV === 'production'?process.env.FRONT_ENDPOINT:process.env.DEV_FRONT_ENDPOINT
+const Auth = new AuthService(FRONT_ENDPOINT)
 import Link from 'next/link'
 import fetch from 'isomorphic-fetch';
 import axios from 'axios'

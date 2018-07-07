@@ -1,10 +1,10 @@
 import axios from 'axios';
 import jwt from 'jsonwebtoken'
 const FRONT_ENDPOINT = process.env.NODE_ENV === 'production'?process.env.FRONT_ENDPOINT:process.env.DEV_FRONT_ENDPOINT
-const ENDPOINT = process.env.NODE_ENV === 'production'?process.env.ENDPOINT:process.env.DEV_END_POINT
+const ENDPOINT = process.env.NODE_ENV === 'production'?process.env.END_POINT:process.env.DEV_END_POINT
 export default class AuthService {
   constructor(domain) {
-    this.domain = domain || FRONT_ENDPOINT
+    this.domain = domain || ENDPOINT
     this.fetch = this.fetch.bind(this)
     this.login = this.login.bind(this)
     this.getProfile = this.getProfile.bind(this)
