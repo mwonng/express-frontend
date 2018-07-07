@@ -35,48 +35,27 @@ class Index extends React.Component {
     this.setState({token}, ()=>{
       console.log(this.state)
     })
-    axios({
-      method: 'post',
-      url: 'http://localhost:3000/auth',
-      data: {email: "michael", password: "111"}
-    })
-    .then( result => {
-      console.log("result:", result)
-      this.setState({
-        result: result.data.success? "yes":"no",
-        isLoading: false
-      })
-    })
+    console.log(".env", process.env.END_POINT );
+    // axios({
+    //   method: 'post',
+    //   url: '/admin',
+    //   data: {key: "value", authorization: "in body"}
+    // })
   }
 
   constructor(props) {
     super(props)
-    // const token = Auth.getToken()
     this.state = {
-      token: "",
-      result: "init",
-      laoding: true
+      page: "4e",
+      token: ""
     }
-    // fetch('https://api.github.com/users/mwonng/repos')
-    // .then( (res) => {
-    //   if (res.status >= 400) {
-    //     // throw new Error("Bad response from server");
-    //     console.log("Bad response from server")
-    //     Router.push('/login')
-    //   }
-    //   return res.json();
-    // })
-    // .then( (repos) => {
-    //   // console.log(stories);
-    //   this.setState({result:repos})
-    // })
   }
 
   render() {
     return(
       <div>
         <p>Hello Next.jsx, time {this.props.host}</p>
-        <p>State:</p>
+        <p>State: {JSON.stringify(this.state)}</p>
         <p>token: {this.state.token}</p>
         <p>result: {this.state.result}</p>
         <p>

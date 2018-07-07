@@ -11,23 +11,6 @@ const mwAuth = require('./utils/middlewares/authenticate')
 app.prepare()
   .then(() => {
     const server = express()
-    // server.use('/',(req, res, next) => {
-    //   // var token = (req.body && req.body.access_token) || (req.query && req.query.access_token) || req.header['x-access-token']
-    //   // var test = window.localStorage.getItem('token')
-    //   // res.setHeader('express-frontend-token', test)
-    //   console.log("im middleware")
-    //   next()
-    // })
-
-    // middleware for authentication
-    // server.post('/admin', mwAuth)
-    // server.post('/admin', (req, res, next) => {
-    //   var token = (req.body && req.body.authorization) || (req.query && req.query.authorization) || req.headers.authorization
-    //   console.log("header is:", req.headers.authorization)
-    //   // res.send({result: "response"})
-    //   next()
-    // })
-    server.post('/admin', mwAuth)
 
     server.get('*', (req, res) => {
       return handle(req, res)
