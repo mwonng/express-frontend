@@ -7,7 +7,8 @@
     "dev": "node server.js",
     "build": "next build",
     "start": "yarn build && NODE_ENV=production node server.js",
-    "start-pm2": "NODE_ENV=production pm2 start ./server.js --name react"
+    "start-pm2": "NODE_ENV=production pm2 start ./server.js --name react",
+    "clean": "rimraf .next/"
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -19,6 +20,7 @@
     "nodemon": "^1.17.5",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
+    "rimraf": "^2.6.2",
     "styled-components": "^2.1.0"
   },
   "devDependencies": {
