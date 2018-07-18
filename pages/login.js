@@ -22,7 +22,7 @@ class Login extends React.Component {
         Router.push('/admin')
       } else {
         localStorage.setItem(process.env.TOKEN_KEY,'n/a')
-        console.log(" if not success failed")
+        console.log("Authenticate failed")
       }
     })
   }

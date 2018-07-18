@@ -49,13 +49,12 @@ class Admin extends Component {
       Auth.autoLogin(token)
         .then(response => {
           if (response.data.success) {
-            console.log("auth success")
+            console.log("Authenticate success")
             this.setState({
               isLoading: false,
               isLogin: true,
             })
           } else {
-            console.log("failed")
             this.setState({
               isLoading: false,
               isLogin: false

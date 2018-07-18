@@ -11,28 +11,12 @@ export default class AuthService {
   }
 
   async login(email, password) {
-    // // Get a token
-    // return this.fetch(`${this.domain}/token`, {
-    //   method: 'POST',
-    //   body: JSON.stringify({
-    //     email,
-    //     password
-    //   })
-    // }).then(res => {
-    //   this.setToken(res.id_token)
-    //   return this.fetch(`${this.domain}/user`, {
-    //     method: 'GET'
-    //   })
-    // }).then(res => {
-    //   this.setProfile(res)
-    //   return Promise.resolve(res)
-    // })
-    let formObj = {email, password}
+    let requestObj = {email, password}
     axios.defaults.headers.common['Authorization'] = this.getToken();
     return axios({
       method: 'post',
       url: `${ENDPOINT}auth/`,
-      data: formObj
+      data: requestObj
     })
   }
 
