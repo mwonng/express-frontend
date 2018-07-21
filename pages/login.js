@@ -6,7 +6,6 @@ import Router from 'next/router'
 const ENDPOINT = process.env.NODE_ENV === 'production'?process.env.ENDPOINT:process.env.DEV_END_POINT
 const Auth = new AuthService(ENDPOINT)
 
-
 class Login extends React.Component {
   constructor(props) {
     super(props)
