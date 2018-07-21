@@ -34,16 +34,34 @@ const Label = styled.label`
   padding-bottom: 10px;
 `
 
-const TextField = (props) => (
-    <InputWrapper>
-      <Label>{props.label}</Label>
-      <StyledInput
-        id={props.id}
-        className={props.class}
-        onChange={props.onChange}
-        >
-      </StyledInput>
-    </InputWrapper>
-)
+class TextField extends React.Component{
+  constructor(props) {
+    super(props)
+  }
+
+  _handleKeyPress = (e) => {
+    if (e.key === 'Enter' && this.props.id === "password") {
+      // return true
+      this.props.onKeyPressEnter()
+      console.log('do validate')
+    }
+  }
+
+  render(){
+    return (
+      <InputWrapper>
+        <Label>{this.props.label}</Label>
+        <StyledInput
+          id={this.props.id}
+          className={this.props.class}
+          onChange={this.props.onChange}
+          type={this.props.id === "password"? "password":"text"}
+          onKeyPress={this._handleKeyPress}
+          >
+        </StyledInput>
+      </InputWrapper>
+    )
+  }
+}
 
 export default TextField

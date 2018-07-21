@@ -19,31 +19,6 @@ class Admin extends Component {
 
   componentDidMount() {
     let token = localStorage.getItem(process.env.TOKEN_KEY)
-    // axios.defaults.headers.common['Authorization'] =  localStorage.getItem(process.env.TOKEN_KEY);
-    // axios({
-    //   method: 'post',
-    //   url: 'http://localhost:3000/auth/token',
-    //   data: {sendToken: localStorage.getItem(process.env.TOKEN_KEY)}
-    // })
-    // .then(response => {
-    //   if (response.data.success) {
-    //     console.log("auth success",response.data)
-    //     this.setState({
-    //       isLoading: false,
-    //       isLogin: true,
-    //     })
-    //   } else {
-    //     console.log("failed")
-    //     this.setState({
-    //       isLoading: false,
-    //       isLogin: false
-    //     })
-    //     Router.push('/login')
-    //   }
-    // })
-
-
-
     let isLoggedin =Auth.loggedIn()
     if (isLoggedin) {
       Auth.autoLogin(token)

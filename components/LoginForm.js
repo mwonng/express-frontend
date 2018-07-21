@@ -23,17 +23,16 @@ class LoginForm extends React.Component {
     this.setState({[event.target.id]: event.target.value})
   }
 
-  postData = () => {
-    console.log("LoginForm - post Data",this.state)
+  submitLogin = () => {
     this.props.handleSubmit(this.state)
   }
 
   render() {
     return (
       <div>
-        <h3>Login</h3>
         <Panel>
-          <p>Panel</p>
+          <h3>Panel</h3>
+
           <TextField
             id="email"
             label="Email"
@@ -47,12 +46,16 @@ class LoginForm extends React.Component {
             class="password"
             disable={true}
             onChange={this.handleChange}
+            onKeyPressEnter={this.submitLogin}
           ></TextField>
           <Button
             color="#0000cc"
             text="Submit"
-            onClick={this.postData}
+            onClick={this.submitLogin}
           />
+          { this.props.notification &&
+            <b style={{color:"red"}}>Login Failed</b>
+          }
         </Panel>
       </div>
     );

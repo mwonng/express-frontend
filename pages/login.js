@@ -8,6 +8,13 @@ const Auth = new AuthService(ENDPOINT)
 
 
 class Login extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      loginResult: ""
+    }
+  }
+
   componentDidMount() {
 
   }
@@ -22,6 +29,12 @@ class Login extends React.Component {
         Router.push('/admin')
       } else {
         localStorage.setItem(process.env.TOKEN_KEY,'n/a')
+        // notification for error
+        this.setState({loginResult: "login error"})
+        setTimeout(()=>{
+            //your function
+            this.setState({loginResult: ""})
+          }, 3000);
         console.log("Authenticate failed")
       }
     })
@@ -31,7 +44,7 @@ class Login extends React.Component {
     return (
       <div>
         <h1>Welcome to login</h1>
-        <LoginForm handleSubmit={this.handleSubmit} ></LoginForm>
+        <LoginForm handleSubmit={this.handleSubmit} notification={this.state.loginResult}></LoginForm>
       </div>
     );
   }
