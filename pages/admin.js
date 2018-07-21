@@ -7,7 +7,7 @@ import Button from '../components/form-components/Button'
 const ENDPOINT = process.env.NODE_ENV === 'production'?process.env.ENDPOINT:process.env.DEV_END_POINT
 
 const Auth = new AuthService(ENDPOINT)
-
+const {Provider, Consumer} = React.createContext('light');
 class Admin extends Component {
   constructor(props) {
     super(props);
@@ -60,14 +60,18 @@ class Admin extends Component {
     }
     if (!this.state.isLoading && this.state.isLogin) {
       return (
-        <div>
-          <h2>Admin page</h2>
-          <Button
-            color="red"
-            onClick={this.logout}
-            text="Sign out"
-          />
-        </div>
+        <Provider value={{name:"-m", role:"admin"}}>
+          <div>
+            <h2>Admin page</h2>
+            <Toolbar />
+            <Button
+              color="red"
+              onClick={this.logout}
+              text="Sign out"
+            />
+          </div>
+        </Provider>
+
       );
     }
     return (
@@ -77,6 +81,28 @@ class Admin extends Component {
     );
   }
 }
+
+// A component in the middle doesn't have to
+// pass the theme down explicitly anymore.
+function Toolbar(props) {
+  return (
+    <div>
+      <ThemedButton />
+    </div>
+  );
+}
+
+function ThemedButton(props) {
+  // Use a Consumer to read the current theme context.
+  // React will find the closest theme Provider above and use its value.
+  // In this example, the current theme is "dark".
+  return (
+    <Consumer>
+      {currentUser => <b>{currentUser.role}</b> }
+    </Consumer>
+  );
+}
+
 
 Admin.propTypes = {
 
