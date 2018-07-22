@@ -32,7 +32,6 @@ class LoginForm extends React.Component {
       <div>
         <Panel>
           <h3>Panel</h3>
-
           <TextField
             id="email"
             label="Email"

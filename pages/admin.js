@@ -43,8 +43,8 @@ class Admin extends Component {
     } else {
       Router.push('/login')
     }
-    console.log("exp?", Auth.isTokenExpired(localStorage.getItem(process.env.TOKEN_KEY)))
-    console.log("isLoggedin",isLoggedin)
+    // console.log("exp?", Auth.isTokenExpired(localStorage.getItem(process.env.TOKEN_KEY)))
+    // console.log("isLoggedin",isLoggedin)
   }
 
   logout() {

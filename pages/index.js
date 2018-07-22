@@ -12,41 +12,17 @@ axios.defaults.headers.common['Authorization'] = "LOOKINGATME!!";
 
 class Index extends React.Component {
   static async getInitialProps({ req,res }) {
-    // const userAgent = req ? req.headers['user-agent'] : navigator.userAgent
-    // const host = req ? req.headers['host']: "no host"
-
-    // res.setHeader('X-Author', 'Michael Wonng')
-    // if (res) {
-    //   res.writeHead(302, {
-    //     Location: '/login'
-    //   })
-    //   res.end()
-    //   res.finished = true
-    // } else {
-    //   Router.push('http://google.com')
-    // }
-    // Router.push('/login')
     return {}
   }
 
   componentDidMount() {
-    // localStorage.setItem('token', 'THIS-IS')
     const token = Auth.getToken()
-    this.setState({token}, ()=>{
-      console.log(this.state)
-    })
-    console.log(".env", process.env.END_POINT );
-    // axios({
-    //   method: 'post',
-    //   url: '/admin',
-    //   data: {key: "value", authorization: "in body"}
-    // })
+    this.setState({token})
   }
 
   constructor(props) {
     super(props)
     this.state = {
-      page: "4e",
       token: ""
     }
   }

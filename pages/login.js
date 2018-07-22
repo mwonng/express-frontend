@@ -6,6 +6,10 @@ import Router from 'next/router'
 const ENDPOINT = process.env.NODE_ENV === 'production'?process.env.ENDPOINT:process.env.DEV_END_POINT
 const Auth = new AuthService(ENDPOINT)
 
+const addToLocalStorage = (key,token) => {
+  localStorage.setItem(key, token)
+  sessionStorage.setItem(key, token)
+}
 class Login extends React.Component {
   constructor(props) {
     super(props)
@@ -15,26 +19,27 @@ class Login extends React.Component {
   }
 
   componentDidMount() {
+  }
 
+  showErrorMsg(errorMsg) {
+    this.setState({loginResult: errorMsg})
+    setTimeout(()=>{
+        //your function
+        this.setState({loginResult: ""})
+    }, 3000);
   }
 
   handleSubmit = (formObj) => {
     Auth.login(formObj.email, formObj.password)
     .then(response => {
       if (response.data.success) {
-        localStorage.setItem(process.env.TOKEN_KEY, response.data.token)
-        sessionStorage.setItem(process.env.SESSION_KEY, response.data.token)
+        addToLocalStorage(process.env.TOKEN_KEY, response.data.token)
         // this can be dashboard or any permitted page
         Router.push('/admin')
       } else {
         localStorage.setItem(process.env.TOKEN_KEY,'n/a')
         // notification for error
-        this.setState({loginResult: "login error"})
-        setTimeout(()=>{
-            //your function
-            this.setState({loginResult: ""})
-          }, 3000);
-        console.log("Authenticate failed")
+        this.showErrorMsg("login error")
       }
     })
   }
