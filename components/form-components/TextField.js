@@ -55,7 +55,7 @@ class TextField extends React.Component{
           id={this.props.id}
           className={this.props.class}
           onChange={this.props.onChange}
-          type={this.props.id === "password"? "password":"text"}
+          type={this.props.password? "password":"text"}
           onKeyPress={this._handleKeyPress}
           >
         </StyledInput>

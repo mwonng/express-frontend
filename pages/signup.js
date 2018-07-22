@@ -1,5 +1,6 @@
 import Panel from '../components/Panel'
 import axios from 'axios'
+import UserService from '../utils/UserService'
 import AuthService from '../utils/AuthService'
 import Router from 'next/router'
 import TextField from '../components/form-components/TextField';
@@ -7,6 +8,7 @@ import Button from '../components/form-components/Button';
 
 const ENDPOINT = process.env.NODE_ENV === 'production'?process.env.ENDPOINT:process.env.DEV_END_POINT
 const Auth = new AuthService(ENDPOINT)
+const UserAction = new UserService(ENDPOINT)
 
 const addToLocalStorage = (key,token) => {
   localStorage.setItem(key, token)
@@ -39,8 +41,9 @@ class Login extends React.Component {
   }
 
   handleSubmit = () => {
+    console.log(this.state)
     let formObj = this.state
-    Auth.login(formObj.email, formObj.password)
+    UserAction.createUser(formObj.email, formObj.password)
     .then(response => {
       if (response.data.success) {
         addToLocalStorage(process.env.TOKEN_KEY, response.data.token)
@@ -58,7 +61,7 @@ class Login extends React.Component {
     return (
       <div>
         <h1>Welcome to login</h1>
-        <Panel handleSubmit={this.handleSubmit} >
+        <Panel title="Sign up">
           <TextField
               id="email"
               label="Email"
@@ -67,12 +70,22 @@ class Login extends React.Component {
               onChange={this.handleChange}
           />
           <TextField
+            class="password"
+            disable={true}
             id="password"
             label="Password"
+            onChange={this.handleChange}
+            onKeyPressEnter={this.handleSubmit}
+            password
+          />
+          <TextField
+            id="password-confirm"
+            label="Confirm Password"
             class="password"
             disable={true}
             onChange={this.handleChange}
             onKeyPressEnter={this.handleSubmit}
+            password
           />
           <Button
             color="#0000cc"
