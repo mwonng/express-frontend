@@ -49,7 +49,7 @@ class Login extends React.Component {
       } else {
         localStorage.setItem(process.env.TOKEN_KEY,'n/a')
         // notification for error
-        this.showErrorMsg("login error")
+        this.showErrorMsg(response.data.msg)
       }
     })
   }
@@ -70,6 +70,7 @@ class Login extends React.Component {
             id="password"
             label="Password"
             class="password"
+            password
             disable={true}
             onChange={this.handleChange}
             onKeyPressEnter={this.handleSubmit}
@@ -81,7 +82,7 @@ class Login extends React.Component {
           />
           { this.state.loginResult &&
             <div>
-              <b style={{color:"red"}}>Login Failed</b>
+              <b style={{color:"red"}}>{this.state.loginResult}</b>
             </div>
           }
         </Panel>

@@ -20,11 +20,19 @@ class Login extends React.Component {
     this.state = {
       email: "",
       password: "",
-      loginResult: ""
+      loginResult: "",
+      isLoading: true,
+      isLogin: false
     }
   }
 
   componentDidMount() {
+    let isLoggedin = Auth.loggedIn()
+    if (isLoggedin) {
+      Router.push('/admin')
+    } else {
+      this.setState ({ isLoading: false })
+    }
   }
 
   showErrorMsg(errorMsg) {
@@ -52,12 +60,17 @@ class Login extends React.Component {
       } else {
         localStorage.setItem(process.env.TOKEN_KEY,'n/a')
         // notification for error
-        this.showErrorMsg("login error")
+        this.showErrorMsg(response.data.msg)
       }
     })
   }
 
   render() {
+    if (this.state.isLoading) {
+      return (
+        <div> Loading ...</div>
+      )
+    }
     return (
       <div>
         <h1>Welcome to login</h1>
@@ -94,7 +107,7 @@ class Login extends React.Component {
           />
           { this.state.loginResult &&
             <div>
-              <b style={{color:"red"}}>Login Failed</b>
+              <b style={{color:"red"}}>{this.state.loginResult}</b>
             </div>
           }
         </Panel>
