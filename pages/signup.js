@@ -36,6 +36,7 @@ class Login extends React.Component {
   }
 
   showErrorMsg(errorMsg) {
+    clearTimeout()
     this.setState({loginResult: errorMsg})
     setTimeout(()=>{
         //your function

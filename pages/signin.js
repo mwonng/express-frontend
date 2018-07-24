@@ -44,10 +44,12 @@ class Login extends React.Component {
     .then(response => {
       if (response.data.success) {
         addToLocalStorage(process.env.TOKEN_KEY, response.data.token)
+        addToLocalStorage('currentUserId', response.data.currentUser.id)
         // this can be dashboard or any permitted page
         Router.push('/admin')
       } else {
         localStorage.setItem(process.env.TOKEN_KEY,'n/a')
+        localStorage.removeItem('currentUserId')
         // notification for error
         this.showErrorMsg(response.data.msg)
       }
@@ -58,7 +60,7 @@ class Login extends React.Component {
     return (
       <div>
         <h1>Welcome to login</h1>
-        <Panel handleSubmit={this.handleSubmit} >
+        <Panel title="Sign In" >
           <TextField
               id="email"
               label="Email"

@@ -34,14 +34,14 @@ class Admin extends Component {
               isLoading: false,
               isLogin: false
             })
-            Router.push('/login')
+            Router.push('/signin')
           }
         })
         .catch(err => {
-          Router.push('/login')
+          Router.push('/signin')
         })
     } else {
-      Router.push('/login')
+      Router.push('/signin')
     }
     // console.log("exp?", Auth.isTokenExpired(localStorage.getItem(process.env.TOKEN_KEY)))
     // console.log("isLoggedin",isLoggedin)
@@ -49,7 +49,7 @@ class Admin extends Component {
 
   logout() {
     Auth.logout()
-    Router.push('/login')
+    Router.push('/signin')
   }
 
   render() {
