@@ -20,17 +20,22 @@ class Login extends React.Component {
       password: "",
       loginResult: ""
     }
+    this.hideErr = this.hideErr.bind(this)
   }
 
   componentDidMount() {
   }
 
+  componentWillUnmount() {
+  }
+
   showErrorMsg(errorMsg) {
     this.setState({loginResult: errorMsg})
-    setTimeout(()=>{
-        //your function
-        this.setState({loginResult: ""})
-    }, 3000);
+  }
+
+  hideErr() {
+      //your function
+      this.setState({loginResult: ""})
   }
 
   handleChange = (event) => {
@@ -62,11 +67,12 @@ class Login extends React.Component {
         <h1>Welcome to login</h1>
         <Panel title="Sign In" >
           <TextField
-              id="email"
-              label="Email"
-              class="email"
-              disable={true}
-              onChange={this.handleChange}
+            id="email"
+            label="Email"
+            class="email"
+            disable={true}
+            onChange={this.handleChange}
+            onFocus={this.hideErr}
           />
           <TextField
             id="password"
@@ -76,6 +82,7 @@ class Login extends React.Component {
             disable={true}
             onChange={this.handleChange}
             onKeyPressEnter={this.handleSubmit}
+            onFocus={this.hideErr}
           />
           <Button
             color="#0000cc"
