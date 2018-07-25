@@ -1,5 +1,4 @@
 import Panel from '../components/Panel'
-import axios from 'axios'
 import UserService from '../utils/UserService'
 import AuthService from '../utils/AuthService'
 import Router from 'next/router'

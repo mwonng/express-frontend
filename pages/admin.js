@@ -7,7 +7,7 @@ import Button from '../components/form-components/Button'
 const ENDPOINT = process.env.NODE_ENV === 'production'?process.env.ENDPOINT:process.env.DEV_END_POINT
 
 const Auth = new AuthService(ENDPOINT)
-const {Provider, Consumer} = React.createContext('light');
+const UserContext = React.createContext();
 class Admin extends Component {
   constructor(props) {
     super(props);
@@ -52,6 +52,10 @@ class Admin extends Component {
     Router.push('/signin')
   }
 
+  getToken() {
+    return localStorage.getItem('currentUserId')
+  }
+
   render() {
     if (this.state.isLoading) {
       return (
@@ -60,7 +64,7 @@ class Admin extends Component {
     }
     if (!this.state.isLoading && this.state.isLogin) {
       return (
-        <Provider value={{name:"-m", role:"admin"}}>
+        <UserContext.Provider value={this.getToken()}>
           <div>
             <h2>Admin page</h2>
             <Toolbar />
@@ -70,7 +74,7 @@ class Admin extends Component {
               text="Sign out"
             />
           </div>
-        </Provider>
+        </UserContext.Provider>
 
       );
     }
@@ -97,9 +101,9 @@ function ThemedButton(props) {
   // React will find the closest theme Provider above and use its value.
   // In this example, the current theme is "dark".
   return (
-    <Consumer>
-      {currentUser => <b>{currentUser.role}</b> }
-    </Consumer>
+    <UserContext.Consumer>
+      {currentUserId => <b>{currentUserId}</b> }
+    </UserContext.Consumer>
   );
 }
 

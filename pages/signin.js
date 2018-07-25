@@ -1,5 +1,4 @@
 import Panel from '../components/Panel'
-import axios from 'axios'
 import AuthService from '../utils/AuthService'
 import Router from 'next/router'
 import TextField from '../components/form-components/TextField';
@@ -49,7 +48,7 @@ class Login extends React.Component {
     .then(response => {
       if (response.data.success) {
         addToLocalStorage(process.env.TOKEN_KEY, response.data.token)
-        addToLocalStorage('currentUserId', response.data.currentUser.id)
+        addToLocalStorage('currentUserId', response.data.currentUser._id)
         // this can be dashboard or any permitted page
         Router.push('/admin')
       } else {
