@@ -4,6 +4,7 @@ import axios from 'axios';
 import Router from 'next/router'
 import AuthService from '../utils/AuthService'
 import Button from '../components/form-components/Button'
+import jwt from 'jsonwebtoken'
 const ENDPOINT = process.env.NODE_ENV === 'production'?process.env.ENDPOINT:process.env.DEV_END_POINT
 
 const Auth = new AuthService(ENDPOINT)
@@ -34,14 +35,25 @@ class Admin extends Component {
               isLoading: false,
               isLogin: false
             })
-            Router.push('/signin')
+            Router.push({
+              pathname: '/signin',
+              query: { error: 'cannot auto login' }
+            })
+            // this.showErrorMsg("Hey here1 ")
           }
         })
         .catch(err => {
-          Router.push('/signin')
+          Router.push({
+            pathname: '/signin',
+            query: { error: 'authentica failed' }
+          })
+          // this.showErrorMsg("Hey here2 ")
         })
     } else {
-      Router.push('/signin')
+      Router.push({
+        pathname: '/signin',
+        query: { error: 'expired or token error' }
+      })
     }
     // console.log("exp?", Auth.isTokenExpired(localStorage.getItem(process.env.TOKEN_KEY)))
     // console.log("isLoggedin",isLoggedin)
@@ -52,8 +64,9 @@ class Admin extends Component {
     Router.push('/signin')
   }
 
-  getToken() {
-    return localStorage.getItem('currentUserId')
+  getCurrentUserId() {
+    let decode = jwt.decode(localStorage.getItem('auth_jwt'))
+    return decode.data.currentUser
   }
 
   render() {
@@ -64,7 +77,7 @@ class Admin extends Component {
     }
     if (!this.state.isLoading && this.state.isLogin) {
       return (
-        <UserContext.Provider value={this.getToken()}>
+        <UserContext.Provider value={this.getCurrentUserId()}>
           <div>
             <h2>Admin page</h2>
             <Toolbar />

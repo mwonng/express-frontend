@@ -22,7 +22,14 @@ class Login extends React.Component {
     this.hideErr = this.hideErr.bind(this)
   }
 
+  static async getInitialProps ({ query }) {
+    return {query:query}
+  }
+
   componentDidMount() {
+    if (this.props.query.error) {
+      this.setState({loginResult: this.props.query.error })
+    }
   }
 
   componentWillUnmount() {
