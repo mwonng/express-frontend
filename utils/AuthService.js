@@ -38,12 +38,16 @@ export default class AuthService {
     }
   }
 
-  autoLogin(toke){
+  // if token is available, auto login
+  autoLogin(token){
     axios.defaults.headers.common['Authorization'] =  localStorage.getItem(process.env.TOKEN_KEY);
     return axios({
       method: 'post',
       url: `${ENDPOINT}auth/token`,
-      data: {sendToken: localStorage.getItem(process.env.TOKEN_KEY)}
+      data: {
+        token: localStorage.getItem(process.env.TOKEN_KEY)
+        // token: token
+      }    // this is useless
     })
   }
 
@@ -52,8 +56,9 @@ export default class AuthService {
     localStorage.setItem('profile', JSON.stringify(profile))
   }
 
-  getProfile(){
+  async getProfile(){
     // Retrieves the profile data from localStorage
+
     const profile = localStorage.getItem('profile')
     return profile ? JSON.parse(localStorage.profile) : {}
   }

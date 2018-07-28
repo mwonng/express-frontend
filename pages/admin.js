@@ -29,6 +29,7 @@ class Admin extends Component {
             this.setState({
               isLoading: false,
               isLogin: true,
+              currentUser: response.data.currentUser
             })
           } else {
             this.setState({
@@ -39,7 +40,6 @@ class Admin extends Component {
               pathname: '/signin',
               query: { error: 'cannot auto login' }
             })
-            // this.showErrorMsg("Hey here1 ")
           }
         })
         .catch(err => {
@@ -47,7 +47,6 @@ class Admin extends Component {
             pathname: '/signin',
             query: { error: 'authentica failed' }
           })
-          // this.showErrorMsg("Hey here2 ")
         })
     } else {
       Router.push({
@@ -55,8 +54,6 @@ class Admin extends Component {
         query: { error: 'expired or token error' }
       })
     }
-    // console.log("exp?", Auth.isTokenExpired(localStorage.getItem(process.env.TOKEN_KEY)))
-    // console.log("isLoggedin",isLoggedin)
   }
 
   logout() {
@@ -69,6 +66,10 @@ class Admin extends Component {
     return decode.data.currentUser
   }
 
+  getCurrentUser(user) {
+    return user
+  }
+
   render() {
     if (this.state.isLoading) {
       return (
@@ -77,10 +78,10 @@ class Admin extends Component {
     }
     if (!this.state.isLoading && this.state.isLogin) {
       return (
-        <UserContext.Provider value={this.getCurrentUserId()}>
+        <UserContext.Provider value={this.state.currentUser}>
           <div>
             <h2>Admin page</h2>
-            <Toolbar />
+            <UserArea />
             <Button
               color="red"
               onClick={this.logout}
@@ -88,7 +89,6 @@ class Admin extends Component {
             />
           </div>
         </UserContext.Provider>
-
       );
     }
     return (
@@ -101,21 +101,29 @@ class Admin extends Component {
 
 // A component in the middle doesn't have to
 // pass the theme down explicitly anymore.
-function Toolbar(props) {
+function UserArea(props) {
   return (
     <div>
-      <ThemedButton />
+      <UserInfo />
     </div>
   );
 }
 
-function ThemedButton(props) {
+function UserInfo(props) {
   // Use a Consumer to read the current theme context.
   // React will find the closest theme Provider above and use its value.
   // In this example, the current theme is "dark".
   return (
     <UserContext.Consumer>
-      {currentUserId => <b>{currentUserId}</b> }
+      { currentUser => {
+        if (currentUser) {
+          var email = currentUser.email
+        } else {
+          var email = "no email"
+        }
+        return(<b>Hello, {email}</b>)
+        }
+      }
     </UserContext.Consumer>
   );
 }

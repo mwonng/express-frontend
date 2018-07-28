@@ -3,6 +3,7 @@ import AuthService from '../utils/AuthService'
 import Router from 'next/router'
 import TextField from '../components/form-components/TextField';
 import Button from '../components/form-components/Button';
+import Link from 'next/link'
 
 const ENDPOINT = process.env.NODE_ENV === 'production'?process.env.ENDPOINT:process.env.DEV_END_POINT
 const Auth = new AuthService(ENDPOINT)
@@ -55,12 +56,12 @@ class Login extends React.Component {
     .then(response => {
       if (response.data.success) {
         addToLocalStorage(process.env.TOKEN_KEY, response.data.token)
-        addToLocalStorage('currentUserId', response.data.currentUser._id)
+        // addToLocalStorage('currentUserId', response.data.currentUser._id)
         // this can be dashboard or any permitted page
         Router.push('/admin')
       } else {
         localStorage.setItem(process.env.TOKEN_KEY,'n/a')
-        localStorage.removeItem('currentUserId')
+        // localStorage.removeItem('currentUserId')
         // notification for error
         this.showErrorMsg(response.data.msg)
       }
@@ -100,6 +101,11 @@ class Login extends React.Component {
               <b style={{color:"red"}}>{this.state.loginResult}</b>
             </div>
           }
+          <div>
+            <Link href="/index">
+              <a>Forget password?</a>
+            </Link>
+          </div>
         </Panel>
       </div>
     );
