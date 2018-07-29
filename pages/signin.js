@@ -4,6 +4,7 @@ import Router from 'next/router'
 import TextField from '../components/form-components/TextField';
 import Button from '../components/form-components/Button';
 import Link from 'next/link'
+import withContainer from '../components/layouts/Container'
 
 const ENDPOINT = process.env.NODE_ENV === 'production'?process.env.ENDPOINT:process.env.DEV_END_POINT
 const Auth = new AuthService(ENDPOINT)
@@ -12,6 +13,8 @@ const addToLocalStorage = (key,token) => {
   localStorage.setItem(key, token)
   sessionStorage.setItem(key, token)
 }
+
+@withContainer
 class Login extends React.Component {
   constructor(props) {
     super(props)
@@ -28,9 +31,9 @@ class Login extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.query.error) {
-      this.setState({loginResult: this.props.query.error })
-    }
+    // if (this.props.query.error) {
+    //   this.setState({loginResult: this.props.query.error })
+    // }
   }
 
   componentWillUnmount() {
@@ -71,7 +74,7 @@ class Login extends React.Component {
   render() {
     return (
       <div>
-        <h1>Welcome to login</h1>
+        <h1>Sign in</h1>
         <Panel title="Sign In" >
           <TextField
             id="email"

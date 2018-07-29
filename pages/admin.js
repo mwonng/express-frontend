@@ -5,10 +5,12 @@ import Router from 'next/router'
 import AuthService from '../utils/AuthService'
 import Button from '../components/form-components/Button'
 import jwt from 'jsonwebtoken'
+import withContainer from '../components/layouts/Container'
 const ENDPOINT = process.env.NODE_ENV === 'production'?process.env.ENDPOINT:process.env.DEV_END_POINT
 
 const Auth = new AuthService(ENDPOINT)
 const UserContext = React.createContext();
+@withContainer
 class Admin extends Component {
   constructor(props) {
     super(props);
@@ -80,7 +82,7 @@ class Admin extends Component {
       return (
         <UserContext.Provider value={this.state.currentUser}>
           <div>
-            <h2>Admin page</h2>
+            <h1>Admin page</h1>
             <UserArea />
             <Button
               color="red"

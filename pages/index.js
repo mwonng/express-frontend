@@ -6,10 +6,10 @@ const Auth = new AuthService(FRONT_ENDPOINT)
 import Link from 'next/link'
 import fetch from 'isomorphic-fetch';
 import axios from 'axios'
-
+import withContainer from '../components/layouts/Container'
 
 axios.defaults.headers.common['Authorization'] = "LOOKINGATME!!";
-
+@withContainer
 class Index extends React.Component {
   static async getInitialProps({ req,res }) {
     // grab some data from here
@@ -48,4 +48,10 @@ class Index extends React.Component {
     )
   }
 }
+
+
+function testable (target) {
+  console.log('testable...');
+}
+
 export default Index
