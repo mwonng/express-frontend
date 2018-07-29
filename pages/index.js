@@ -12,6 +12,7 @@ axios.defaults.headers.common['Authorization'] = "LOOKINGATME!!";
 
 class Index extends React.Component {
   static async getInitialProps({ req,res }) {
+    // grab some data from here
     return {}
   }
 
@@ -30,24 +31,19 @@ class Index extends React.Component {
   render() {
     return(
       <div>
-        <p>Hello Next.jsx, time {this.props.host}</p>
-        <p>State: {JSON.stringify(this.state)}</p>
-        <p>token: {this.state.token}</p>
-        <p>result: {this.state.result}</p>
-        <p>
-          Click{' '}
-          <Link href="/login" replace>
-            <a>here</a>
-          </Link>{' '}
-          to replace
-        </p>
-        <p>
-          Click{' '}
-          <Link href="/login">
-            <a>here</a>
-          </Link>{' '}
-          to redirect more
-        </p>
+        <h1>Homepage</h1>
+        <p>Hello World</p>
+        <div>
+          <span>Already have account and </span>
+          <Link href="/signin">
+            <a> Sign in</a>
+          </Link>
+        </div>
+        <div>
+          <Link href="/signup">
+            <a>Create a new account</a>
+          </Link>
+        </div>
       </div>
     )
   }

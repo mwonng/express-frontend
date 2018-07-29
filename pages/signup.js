@@ -4,6 +4,7 @@ import AuthService from '../utils/AuthService'
 import Router from 'next/router'
 import TextField from '../components/form-components/TextField';
 import Button from '../components/form-components/Button';
+import Link from 'next/link'
 
 const ENDPOINT = process.env.NODE_ENV === 'production'?process.env.ENDPOINT:process.env.DEV_END_POINT
 const Auth = new AuthService(ENDPOINT)
@@ -111,6 +112,11 @@ class Login extends React.Component {
               <b style={{color:"red"}}>{this.state.loginResult}</b>
             </div>
           }
+          <div>
+            <Link href="/signin">
+              <a>Sign in</a>
+            </Link>
+          </div>
         </Panel>
       </div>
     );
