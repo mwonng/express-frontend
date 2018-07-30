@@ -31,7 +31,7 @@ class Login extends React.Component {
   componentDidMount() {
     let isLoggedin = Auth.loggedIn()
     if (isLoggedin) {
-      Router.push('/admin')
+      // Router.push('/admin')
     } else {
       this.setState ({ isLoading: false })
     }
@@ -53,7 +53,6 @@ class Login extends React.Component {
   }
 
   handleSubmit = () => {
-    console.log(this.state)
     let formObj = this.state
     UserAction.createUser(formObj.email, formObj.password)
     .then(response => {
