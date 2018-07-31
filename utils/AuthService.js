@@ -31,7 +31,7 @@ export default class AuthService {
     if (decoded !== null) {
       let {exp} = decoded
       let current = Date.now()
-      return ( exp-current >= 0 )? true:false
+      return ( exp*1000 - current <= 0 )? true:false
     } else {
       return true
       // throw new Error('a err or token invalid');
