@@ -10,6 +10,8 @@ const ENDPOINT = process.env.NODE_ENV === 'production'?process.env.ENDPOINT:proc
 const Auth = new AuthService(ENDPOINT)
 const UserAction = new UserService(ENDPOINT)
 
+import jwt from 'jsonwebtoken'
+
 const addToLocalStorage = (key,token) => {
   localStorage.setItem(key, token)
   sessionStorage.setItem(key, token)
@@ -29,12 +31,8 @@ class Login extends React.Component {
   }
 
   componentDidMount() {
-    let isLoggedin = Auth.loggedIn()
-    if (isLoggedin) {
-      // Router.push('/admin')
-    } else {
-      this.setState ({ isLoading: false })
-    }
+    console.log("isExpried? ->", Auth.isTokenExpired(Auth.getToken()))
+    this.setState ({ isLoading: false })
   }
 
   showErrorMsg(errorMsg) {
