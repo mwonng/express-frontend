@@ -24,6 +24,7 @@ class Login extends React.Component {
       loginResult: ""
     }
     this.hideErr = this.hideErr.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   static async getInitialProps ({ query }) {

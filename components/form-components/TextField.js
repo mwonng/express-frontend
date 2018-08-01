@@ -37,13 +37,18 @@ const Label = styled.label`
 class TextField extends React.Component{
   constructor(props) {
     super(props)
+    this.state = {
+      isValidate: true
+    }
   }
 
   _handleKeyPress = (e) => {
     if (e.key === 'Enter' && this.props.id === "password") {
-      // return true
       this.props.onKeyPressEnter()
-      console.log('do validate')
+    }
+    if (this.props.validate) {
+      !this.props.validate(e.target.value) && console.log("validate false")
+      this.setState({isValidate: this.props.validate(e.target.value)}, ()=>console.log(this.state))
     }
   }
 
@@ -56,8 +61,9 @@ class TextField extends React.Component{
           className={this.props.class}
           onChange={this.props.onChange}
           type={this.props.password? "password":"text"}
-          onKeyPres={this._handleKeyPress}
+          onKeyPress={this._handleKeyPress}
           onFocus={this.props.onFocus}
+          isValidate={this.state.isValidate}
           >
         </StyledInput>
       </InputWrapper>

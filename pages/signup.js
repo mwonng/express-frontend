@@ -37,6 +37,14 @@ class Login extends React.Component {
     }
   }
 
+  validatePassword(password) {
+    let length = password.length
+    if (length < 6 ) {
+      return false
+    }
+    return true
+  }
+
   showErrorMsg(errorMsg) {
     clearTimeout()
     this.setState({loginResult: errorMsg})
@@ -93,6 +101,7 @@ class Login extends React.Component {
             label="Password"
             onChange={this.handleChange}
             onKeyPressEnter={this.handleSubmit}
+            validate={this.validatePassword}
             password
           />
           <TextField
