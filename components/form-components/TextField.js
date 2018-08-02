@@ -1,5 +1,14 @@
 import styled from 'styled-components'
 
+const TextFieldTheme = {
+  normal: {
+    border: "rgba(81, 203, 238, 1)",
+  },
+  warning: {
+    border: "rgba(204,102,102,0.8)"
+  }
+}
+
 const StyledInput = styled.input`
   display: block;
   border-radius: 4px;
@@ -14,10 +23,6 @@ const StyledInput = styled.input`
   -ms-transition: all 0.30s ease-in-out;
   -o-transition: all 0.30s ease-in-out;
   outline: none;
-  &:focus {
-    box-shadow: 0 0 5px rgba(81, 203, 238, 1);
-    border: 1px solid rgba(81, 203, 238, 1);
-  }
 `
 
 const InputWrapper = styled.div`
@@ -25,6 +30,10 @@ const InputWrapper = styled.div`
   padding: 0;
   position: relative;
   margin-bottom: 10px;
+  > input:focus {
+    box-shadow: 0 0 5px ${ props=> TextFieldTheme[props.theme].border };
+    border: 1px solid ${ props=> TextFieldTheme[props.theme].border };
+  }
 `
 
 const Label = styled.label`
@@ -34,30 +43,58 @@ const Label = styled.label`
   padding-bottom: 10px;
 `
 
+
+
 class TextField extends React.Component{
   constructor(props) {
     super(props)
+    this.state = {
+      isValidate: true
+    }
   }
 
   _handleKeyPress = (e) => {
     if (e.key === 'Enter' && this.props.id === "password") {
-      // return true
       this.props.onKeyPressEnter()
-      console.log('do validate')
     }
   }
 
+  _onChange = (e) => {
+    this.props.onChange;
+    this._handleValidate(this.props.validate, e.target.value)
+  }
+
+  _handleValidate = (validateFunction, value) => {
+    if (validateFunction) {
+        this.setState({
+          isValidate: validateFunction(value) ? true : false
+        });
+    } else {
+      this.setState({
+        isValidate: true
+      });
+    }
+  }
+
+  _onFocus = (e) => {
+    this._handleValidate(this.props.validate, e.target.value);
+    this.props.onFocus;
+  }
+
   render(){
+    let {isValidate} = this.state;
+    let theme = isValidate? 'normal':'warning';
     return (
-      <InputWrapper>
+      <InputWrapper theme={theme}>
         <Label>{this.props.label}</Label>
         <StyledInput
           id={this.props.id}
           className={this.props.class}
-          onChange={this.props.onChange}
+          onChange={this._onChange}
           type={this.props.password? "password":"text"}
-          onKeyPres={this._handleKeyPress}
-          onFocus={this.props.onFocus}
+          onKeyPress={this._handleKeyPress}
+          onFocus={this._onFocus}
+          isValidate={this.state.isValidate}
           >
         </StyledInput>
       </InputWrapper>
