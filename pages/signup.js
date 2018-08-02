@@ -15,6 +15,30 @@ const addToLocalStorage = (key,token) => {
   sessionStorage.setItem(key, token)
 }
 
+const validatePassword = (password) => {
+  let length = password.length
+  if (length < 6 || password === "") {
+    return false
+  }
+  return true
+}
+
+const validateEmail = (password) => {
+  // let length = password.length
+  if (password === "") {
+    return false
+  }
+  return true
+}
+
+const validateConfirmPassword = (password) => {
+  // let length = password.length
+  if (password !== this.state.password) {
+    return false
+  }
+  return true
+}
+
 @withContainer
 class Login extends React.Component {
   constructor(props) {
@@ -35,14 +59,6 @@ class Login extends React.Component {
     } else {
       this.setState ({ isLoading: false })
     }
-  }
-
-  validatePassword(password) {
-    let length = password.length
-    if (length < 6 ) {
-      return false
-    }
-    return true
   }
 
   showErrorMsg(errorMsg) {
@@ -93,6 +109,7 @@ class Login extends React.Component {
               class="email"
               disable={true}
               onChange={this.handleChange}
+              validate={validateEmail}
           />
           <TextField
             class="password"
@@ -101,7 +118,7 @@ class Login extends React.Component {
             label="Password"
             onChange={this.handleChange}
             onKeyPressEnter={this.handleSubmit}
-            validate={this.validatePassword}
+            validate={validatePassword}
             password
           />
           <TextField
@@ -111,6 +128,7 @@ class Login extends React.Component {
             disable={true}
             onChange={this.handleChange}
             onKeyPressEnter={this.handleSubmit}
+            validate={validateConfirmPassword}
             password
           />
           <Button
