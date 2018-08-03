@@ -60,20 +60,28 @@ class TextField extends React.Component{
   }
 
   _onChange = (e) => {
-    this.props.onChange;
-    this._handleValidate(this.props.validate, e.target.value)
+    this.props.onChange(e);
+    this._handleValidate(this.props.validate, e.target.value);
   }
 
   _handleValidate = (validateFunction, value) => {
     if (validateFunction) {
-        this.setState({
-          isValidate: validateFunction(value) ? true : false
-        });
-    } else {
-      this.setState({
-        isValidate: true
+      return this.setState({
+        isValidate: validateFunction(value) ? true : false
       });
     }
+    if (this.props.isMatch !== undefined) {
+      return this.setState({
+        isValidate: this.props.isMatch
+      }, () => {
+        return this.setState({
+          isValidate: this.props.isMatch
+        });
+      });
+    }
+    return this.setState({
+      isValidate: true
+    });
   }
 
   _onFocus = (e) => {

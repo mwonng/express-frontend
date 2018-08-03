@@ -33,16 +33,8 @@ const validateEmail = (password) => {
   return true
 }
 
-const validateConfirmPassword = (password) => {
-  // let length = password.length
-  if (password !== this.state.password) {
-    return false
-  }
-  return true
-}
-
 @withContainer
-class Login extends React.Component {
+class Signup extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -52,11 +44,20 @@ class Login extends React.Component {
       isLoading: true,
       isLogin: false
     }
+    this.isMatched = this.isMatched.bind(this)
   }
 
   componentDidMount() {
     console.log("isExpried? ->", Auth.isTokenExpired(Auth.getToken()))
     this.setState ({ isLoading: false })
+  }
+
+  validateConfirmPassword(passwordConfirm) {
+    return this.isMatched.bind(this)
+  }
+
+  isMatched() {
+    return this.state.password === this.state.passwordConfirm
   }
 
   showErrorMsg(errorMsg) {
@@ -71,7 +72,7 @@ class Login extends React.Component {
 
   handleChange = (event) => {
     event.preventDefault()
-    this.setState({[event.target.id]: event.target.value})
+    this.setState({[event.target.id]: event.target.value}, ()=>console.log("signup state->", this.state))
   }
 
   handleSubmit = () => {
@@ -119,13 +120,13 @@ class Login extends React.Component {
             password
           />
           <TextField
-            id="password-confirm"
+            id="passwordConfirm"
             label="Confirm Password"
             class="password"
             disable={true}
             onChange={this.handleChange}
             onKeyPressEnter={this.handleSubmit}
-            validate={validateConfirmPassword}
+            isMatch={this.state.password === this.state.passwordConfirm}
             password
           />
           <Button
@@ -149,4 +150,4 @@ class Login extends React.Component {
   }
 }
 
-export default Login
+export default Signup
