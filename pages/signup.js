@@ -17,22 +17,6 @@ const addToLocalStorage = (key,token) => {
   sessionStorage.setItem(key, token)
 }
 
-const validatePassword = (password) => {
-  var strongRegex = new RegExp("^(?=.*[0-9])(?=.{6,})");
-  if (!strongRegex.test(password)) {
-    return false
-  }
-  return true
-}
-
-const validateEmail = (email) => {
-  var emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  if (!emailRegex.test(String(email).toLowerCase())) {
-    return false
-  }
-  return true
-}
-
 @withContainer
 class Signup extends React.Component {
   constructor(props) {
@@ -42,9 +26,11 @@ class Signup extends React.Component {
       password: "",
       loginResult: "",
       isLoading: true,
-      isLogin: false
+      isLogin: false,
+      valid: true
     }
     this.isMatched = this.isMatched.bind(this)
+    this.setState = this.setState.bind(this)
   }
 
   componentDidMount() {
@@ -52,8 +38,36 @@ class Signup extends React.Component {
     this.setState ({ isLoading: false })
   }
 
+  validateEmail(email) {
+    var emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (!emailRegex.test(String(email).toLowerCase())) {
+      () => this.setState({valid: false})
+      return false
+    }
+    return true
+  }
+
+  validatePassword(password) {
+    var strongRegex = new RegExp("^(?=.*[0-9])(?=.{6,})");
+    if (!strongRegex.test(password)) {
+      () => this.setState({valid: false})
+      return false
+    }
+    return true
+  }
+
+  isValidForNextSetp (){
+    let isPass = this.validateEmail(this.state.email) && this.validateConfirmPassword(this.state.passwordConfirm) && this.isMatched()
+    if (!isPass) {
+      console.log("is pass? ->",isPass)
+      return false
+    }
+    return isPass
+  }
+
   validateConfirmPassword(passwordConfirm) {
-    return this.isMatched.bind(this)
+    this.setState({ valid: this.isMatched()})
+    return this.isMatched()
   }
 
   isMatched() {
@@ -77,18 +91,21 @@ class Signup extends React.Component {
 
   handleSubmit = () => {
     let formObj = this.state
-    UserAction.createUser(formObj.email, formObj.password)
-    .then(response => {
-      if (response.data.success) {
-        addToLocalStorage(process.env.TOKEN_KEY, response.data.token)
-        // this can be dashboard or any permitted page
-        Router.push('/admin')
-      } else {
-        localStorage.setItem(process.env.TOKEN_KEY,'n/a')
-        // notification for error
-        this.showErrorMsg(response.data.msg)
-      }
-    })
+    if (this.isValidForNextSetp()) {
+      console.log(this.isMatched())
+      UserAction.createUser(formObj.email, formObj.password)
+        .then(response => {
+          if (response.data.success) {
+            addToLocalStorage(process.env.TOKEN_KEY, response.data.token)
+            // this can be dashboard or any permitted page
+            Router.push('/admin')
+          } else {
+            localStorage.setItem(process.env.TOKEN_KEY,'n/a')
+            // notification for error
+            this.showErrorMsg(response.data.msg)
+          }
+        })
+    }
   }
 
   render() {
@@ -107,7 +124,7 @@ class Signup extends React.Component {
               class="email"
               disable={true}
               onChange={this.handleChange}
-              validate={validateEmail}
+              validate={this.validateEmail}
           />
           <TextField
             class="password"
@@ -116,7 +133,7 @@ class Signup extends React.Component {
             label="Password"
             onChange={this.handleChange}
             onKeyPressEnter={this.handleSubmit}
-            validate={validatePassword}
+            validate={this.validatePassword}
             password
           />
           <TextField
