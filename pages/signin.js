@@ -96,7 +96,7 @@ class Login extends React.Component {
             onFocus={this.hideErr}
           />
           <Button
-            color="#0000cc"
+            color="#5EBBB3"
             text="Submit"
             onClick={this.handleSubmit}
           />

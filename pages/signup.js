@@ -34,7 +34,6 @@ class Signup extends React.Component {
   }
 
   componentDidMount() {
-    console.log("isExpried? ->", Auth.isTokenExpired(Auth.getToken()))
     this.setState ({ isLoading: false })
   }
 
@@ -59,7 +58,6 @@ class Signup extends React.Component {
   isValidForNextSetp (){
     let isPass = this.validateEmail(this.state.email) && this.validateConfirmPassword(this.state.passwordConfirm) && this.isMatched()
     if (!isPass) {
-      console.log("is pass? ->",isPass)
       return false
     }
     return isPass
@@ -147,7 +145,7 @@ class Signup extends React.Component {
             password
           />
           <Button
-            color="#0000cc"
+            color="#5EBBB3"
             text="Submit"
             onClick={this.handleSubmit}
           />
