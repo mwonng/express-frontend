@@ -111,7 +111,7 @@ class Login extends React.Component {
             </Link>
           </div>
           <div>
-            <Link href="/index">
+            <Link href="/forget">
               <a>Forget password?</a>
             </Link>
           </div>
