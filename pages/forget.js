@@ -22,7 +22,7 @@ class ForgetPassword extends React.Component {
     super(props)
     this.state = {
       email: "",
-      loginResult: ""
+      submitResult: ""
     }
     this.hideErr = this.hideErr.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -56,21 +56,22 @@ class ForgetPassword extends React.Component {
   }
 
   handleSubmit = () => {
-    let formObj = this.state
-    Auth.login(formObj.email, formObj.password)
-    .then(response => {
-      if (response.data.success) {
-        addToLocalStorage(process.env.TOKEN_KEY, response.data.token)
-        // addToLocalStorage('currentUserId', response.data.currentUser._id)
-        // this can be dashboard or any permitted page
-        Router.push('/admin')
-      } else {
-        localStorage.setItem(process.env.TOKEN_KEY,'n/a')
-        // localStorage.removeItem('currentUserId')
-        // notification for error
-        this.showErrorMsg(response.data.msg)
-      }
-    })
+    let {email} = this.state
+    console.log(this.state)
+    // Auth.login(formObj.email, formObj.password)
+    // .then(response => {
+    //   if (response.data.success) {
+    //     addToLocalStorage(process.env.TOKEN_KEY, response.data.token)
+    //     // addToLocalStorage('currentUserId', response.data.currentUser._id)
+    //     // this can be dashboard or any permitted page
+    //     Router.push('/admin')
+    //   } else {
+    //     localStorage.setItem(process.env.TOKEN_KEY,'n/a')
+    //     // localStorage.removeItem('currentUserId')
+    //     // notification for error
+    //     this.showErrorMsg(response.data.msg)
+    //   }
+    // })
   }
 
   render() {
