@@ -3,6 +3,8 @@ import AuthService from '../utils/AuthService'
 import Router from 'next/router'
 import TextField from '../components/form-components/TextField';
 import Button from '../components/form-components/Button';
+import FlashMessage from '../components/form-components/FlashMessage';
+// import Notification from '../components/form-components/Notification';
 import Link from 'next/link'
 import withContainer from '../components/layouts/Container'
 
@@ -72,10 +74,19 @@ class ForgetPassword extends React.Component {
   }
 
   render() {
+    const isError = true;
     return (
       <div>
         <h1>Forget your password?</h1>
         <Panel title="Sign In" >
+          {
+            isError &&
+            <FlashMessage
+              text="Flash Message"
+              type='success'
+              duration='3000'
+            />
+          }
           <TextField
             id="email"
             label="Your email"
