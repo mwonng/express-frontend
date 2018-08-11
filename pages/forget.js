@@ -24,11 +24,11 @@ class ForgetPassword extends React.Component {
       email: "",
       currentMessage: {
       },
-      showFlashMessage: false
     }
-    this.notifyEnd = this.notifyEnd.bind(this)
-    this.hideErr = this.hideErr.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
+    // TODO: this should be integrated into withFlashMessage.js
+    this.flashMessageCallback = this.flashMessageCallback.bind(this);
+    this.hideErr = this.hideErr.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   static async getInitialProps ({ query }) {
@@ -36,10 +36,6 @@ class ForgetPassword extends React.Component {
   }
 
   componentDidMount() {
-    console.log("decorator ->", this.showFlashMessage)
-    // if (this.props.query.error) {
-    //   this.setState({loginResult: this.props.query.error })
-    // }
   }
 
   componentWillUnmount() {
@@ -59,23 +55,15 @@ class ForgetPassword extends React.Component {
     this.setState({[event.target.id]: event.target.value})
   }
 
-  notifyEnd() {
-    this.setState({
-      showFlashMessage: false
-    });
-  }
-
   handleSubmit = () => {
     let {email} = this.state
     this.setState({
       currentMessage:{
         type: 'success',
-        message: 'Show me the momeny'
+        message: 'Show me the momeny111'
       },
       showFlashMessage: true
     });
-    console.log(this.state.currentMessage);
-
     // Auth.login(formObj.email, formObj.password)
     // .then(response => {
     //   if (response.data.success) {
@@ -104,7 +92,7 @@ class ForgetPassword extends React.Component {
             type={type}
             duration='3000'
             onShown={this.state.currentMessage.visible}
-            callback={this.notifyEnd}
+            callback={this.flashMessageCallback}
           />}
           <TextField
             id="email"

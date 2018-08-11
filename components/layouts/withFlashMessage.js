@@ -8,22 +8,16 @@ const container = WrappedComponent => {
       this.state = {
         ...this.state,
         showFlashMessage: false
-      }
+      };
+      this.flashMessageCallback = this.flashMessageCallback.bind(this);
     }
 
-    notifyEnd() {
+    flashMessageCallback() {
       this.setState({
         showFlashMessage: false
       });
     }
 
-    componentDidMount() {
-      console.log("withFlashMessage!!", this.state);
-    }
-
-    render() {
-      return super.render();
-    }
   }
 }
 
