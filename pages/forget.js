@@ -4,12 +4,11 @@ import Router from 'next/router'
 import TextField from '../components/form-components/TextField';
 import Button from '../components/form-components/Button';
 import FlashMessage from '../components/form-components/FlashMessage';
-// import Notification from '../components/form-components/Notification';
 import Link from 'next/link'
 import withContainer from '../components/layouts/Container'
+import withFlashMessage from '../components/layouts/withFlashMessage'
 
 const ENDPOINT = process.env.NODE_ENV === 'production'?process.env.ENDPOINT:process.env.DEV_END_POINT
-const Auth = new AuthService(ENDPOINT)
 
 const addToLocalStorage = (key,token) => {
   localStorage.setItem(key, token)
@@ -17,13 +16,17 @@ const addToLocalStorage = (key,token) => {
 }
 
 @withContainer
+@withFlashMessage
 class ForgetPassword extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       email: "",
-      submitResult: ""
+      currentMessage: {
+      },
+      showFlashMessage: false
     }
+    this.notifyEnd = this.notifyEnd.bind(this)
     this.hideErr = this.hideErr.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
@@ -33,6 +36,7 @@ class ForgetPassword extends React.Component {
   }
 
   componentDidMount() {
+    console.log("decorator ->", this.showFlashMessage)
     // if (this.props.query.error) {
     //   this.setState({loginResult: this.props.query.error })
     // }
@@ -55,9 +59,23 @@ class ForgetPassword extends React.Component {
     this.setState({[event.target.id]: event.target.value})
   }
 
+  notifyEnd() {
+    this.setState({
+      showFlashMessage: false
+    });
+  }
+
   handleSubmit = () => {
     let {email} = this.state
-    console.log(this.state)
+    this.setState({
+      currentMessage:{
+        type: 'success',
+        message: 'Show me the momeny'
+      },
+      showFlashMessage: true
+    });
+    console.log(this.state.currentMessage);
+
     // Auth.login(formObj.email, formObj.password)
     // .then(response => {
     //   if (response.data.success) {
@@ -75,19 +93,19 @@ class ForgetPassword extends React.Component {
   }
 
   render() {
-    const isError = true;
+    const { showFlashMessage } = this.state;
+    const { type, message } = this.state.currentMessage;
     return (
       <div>
         <h1>Forget your password?</h1>
         <Panel title="Sign In" >
-          {
-            isError &&
-            <FlashMessage
-              text="Flash Message"
-              type='success'
-              duration='3000'
-            />
-          }
+          {showFlashMessage && <FlashMessage
+            text={message}
+            type={type}
+            duration='3000'
+            onShown={this.state.currentMessage.visible}
+            callback={this.notifyEnd}
+          />}
           <TextField
             id="email"
             label="Your email"

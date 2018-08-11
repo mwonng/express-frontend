@@ -61,14 +61,16 @@ class FlashMessage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isShown: true,
+      isShown: true
     }
+    this.onShow = this.onShow.bind(this)
     this.onClose = this.onClose.bind(this);
     this.readyToFadeOut = this.readyToFadeOut.bind(this);
     this.onHold = this.onHold.bind(this);
   }
+
   componentDidMount() {
-    this.readyToFadeOut();
+    this.onShow();
   }
 
   readyToFadeOut() {
@@ -78,8 +80,18 @@ class FlashMessage extends React.Component {
     );
   }
 
+  shouldComponentUpdate() {
+    return true
+  }
+
+  onShow() {
+    this.setState({ isShown: true }, () => this.readyToFadeOut() )
+  }
+
   onClose() {
-    this.setState({isShown:false})
+    this.setState({ isShown: false }, () => {
+      this.props.callback()
+    });
   }
 
   onHold() {
@@ -91,21 +103,22 @@ class FlashMessage extends React.Component {
   }
 
   render() {
-    const {isShown} = this.state
+    const {isShown, type} = this.state;
     return (
       <FlashContiner className={isShown?'show':'hide'}>
         <FlashMsgWrapper
           color={this.props.color}
           onClick={this.props.onClick}
-          theme={this.props.type}
+          theme={type}
           isShown={isShown}
+          onShown={this.props.onShown}
           onMouseEnter={this.onHold}
           onMouseLeave={this.readyToFadeOut}
           >{this.props.text}
         </FlashMsgWrapper>
       </FlashContiner>
-
     );
+
   }
 }
 
@@ -116,7 +129,7 @@ FlashMsgWrapper.defaultProps = {
 }
 
 FlashMessage.defaultProps = {
-  text: 'no text passed'
+  text: 'FlashMessage Component error'
 }
 
 export default FlashMessage;
