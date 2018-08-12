@@ -25,8 +25,6 @@ class ForgetPassword extends React.Component {
       currentMessage: {
       },
     }
-    // TODO: this should be integrated into withFlashMessage.js
-    // this.flashMessageCallback = this.flashMessageCallback.bind(this);
     this.hideErr = this.hideErr.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -57,7 +55,6 @@ class ForgetPassword extends React.Component {
 
   handleSubmit = () => {
     let {email} = this.state;
-    console.log("1 ->", this.hello )
     this.setState({
       showFlashMessage: true,
       currentMessage:{
@@ -88,13 +85,15 @@ class ForgetPassword extends React.Component {
       <div>
         <h1>Forget your password?</h1>
         <Panel title="Sign In" >
-          {showFlashMessage && <FlashMessage
-            text={message}
-            type={type}
-            duration='3000'
-            onShown={this.state.currentMessage.visible}
-            callback={this.flashMessageCallback}
-          />}
+          { showFlashMessage &&
+            <FlashMessage
+              // text={message}
+              // type={type}
+              // duration='3000'
+              callback={this.flashMessageCallback}
+            >Children Text
+            </FlashMessage>
+          }
           <TextField
             id="email"
             label="Your email"
