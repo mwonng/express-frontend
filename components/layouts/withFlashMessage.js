@@ -1,6 +1,4 @@
-// import ''
-
-const container = WrappedComponent => {
+const withFlashMessage = WrappedComponent => {
   // console.log('simpleHoc');
   return class Inheritance extends WrappedComponent {
     constructor(props) {
@@ -9,20 +7,24 @@ const container = WrappedComponent => {
         ...this.state,
         showFlashMessage: false
       };
+      this.isFlashMsgVisible = false;
       this.flashMessageCallback = this.flashMessageCallback.bind(this);
     }
 
+    componentWillUnmount() {
+      clearTimeout(this.timer);
+    }
+
     flashMessageCallback() {
-      this.setState({
-        showFlashMessage: false
-      });
+      this.timer = setTimeout(
+        () => this.setState({
+          showFlashMessage: false
+        }),
+        500
+      );
     }
 
   }
 }
 
-// const container = target => {
-//   target.showFlashMessage = false;
-// }
-
-export default container
+export default withFlashMessage

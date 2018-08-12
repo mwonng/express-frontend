@@ -60,8 +60,10 @@ const theme = {
 class FlashMessage extends React.Component {
   constructor(props) {
     super(props);
+    const { type } = this.props
     this.state = {
-      isShown: true
+      isShown: true,
+      type
     }
     this.onShow = this.onShow.bind(this)
     this.onClose = this.onClose.bind(this);

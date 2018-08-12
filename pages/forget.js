@@ -25,8 +25,6 @@ class ForgetPassword extends React.Component {
       currentMessage: {
       },
     }
-    // TODO: this should be integrated into withFlashMessage.js
-    this.flashMessageCallback = this.flashMessageCallback.bind(this);
     this.hideErr = this.hideErr.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -56,13 +54,14 @@ class ForgetPassword extends React.Component {
   }
 
   handleSubmit = () => {
-    let {email} = this.state
+    let {email} = this.state;
+    console.log("1 ->", this.hello )
     this.setState({
+      showFlashMessage: true,
       currentMessage:{
         type: 'success',
         message: 'Show me the momeny111'
-      },
-      showFlashMessage: true
+      }
     });
     // Auth.login(formObj.email, formObj.password)
     // .then(response => {
