@@ -105,18 +105,17 @@ class FlashMessage extends React.Component {
   }
 
   render() {
-    const {isShown, type} = this.state;
+    const { isShown, type } = this.state;
+    const { color } = this.props;
     return (
       <FlashContiner className={isShown?'show':'hide'}>
         <FlashMsgWrapper
-          color={this.props.color}
-          onClick={this.props.onClick}
+          color={color}
           theme={type}
           isShown={isShown}
-          onShown={this.props.onShown}
           onMouseEnter={this.onHold}
           onMouseLeave={this.readyToFadeOut}
-          >{this.props.text}
+          >{this.props.children}
         </FlashMsgWrapper>
       </FlashContiner>
     );
@@ -127,11 +126,11 @@ class FlashMessage extends React.Component {
 FlashMsgWrapper.defaultProps = {
   theme: 'error',
   isShown: true,
-  duration: 3000
 }
 
 FlashMessage.defaultProps = {
-  text: 'FlashMessage Component error'
+  children: 'FlashMessage Component error',
+  duration: 3000
 }
 
 export default FlashMessage;
