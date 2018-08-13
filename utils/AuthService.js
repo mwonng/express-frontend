@@ -20,6 +20,16 @@ export default class AuthService {
     })
   }
 
+  async forgetPassword(email) {
+    let requestObj = {email}
+    // axios.defaults.headers.common['Authorization'] = this.getToken();
+    return axios({
+      method: 'post',
+      url: `${ENDPOINT}auth/forget/`,
+      data: requestObj
+    })
+  }
+
   loggedIn(){
     // Checks if there is a saved token and it's still valid
     const token = this.getToken()

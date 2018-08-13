@@ -12,8 +12,9 @@ const ENDPOINT = process.env.NODE_ENV === 'production'?process.env.ENDPOINT:proc
 
 const addToLocalStorage = (key,token) => {
   localStorage.setItem(key, token)
-  sessionStorage.setItem(key, token)
 }
+
+const Auth = new AuthService()
 
 @withContainer
 @withFlashMessage
@@ -53,27 +54,34 @@ class ForgetPassword extends React.Component {
 
   handleSubmit = () => {
     let {email} = this.state;
-    this.setState({
-      showFlashMessage: true,
-      flashMessage:{
-        type: 'success',
-        message: 'Show me the momeny111'
+    Auth.forgetPassword(email)
+    .then(response => {
+      if (response.data.success) {
+        addToLocalStorage(process.env.TOKEN_KEY, response.data.token)
+        // addToLocalStorage('currentUserId', response.data.currentUser._id)
+        // this can be dashboard or any permitted page
+        this.setState({
+          showFlashMessage: true,
+          flashMessage:{
+            type: 'success',
+            message: response.data.msg
+          }
+        });
+        // Router.push('/admin')
+      } else {
+        localStorage.setItem(process.env.TOKEN_KEY,'n/a')
+        // localStorage.removeItem('currentUserId')
+        // notification for error
+        this.setState({
+          showFlashMessage: true,
+          flashMessage:{
+            type: 'error',
+            message: response.data.msg
+          }
+        });
+        this.showErrorMsg(response.data.msg)
       }
-    });
-    // Auth.login(formObj.email, formObj.password)
-    // .then(response => {
-    //   if (response.data.success) {
-    //     addToLocalStorage(process.env.TOKEN_KEY, response.data.token)
-    //     // addToLocalStorage('currentUserId', response.data.currentUser._id)
-    //     // this can be dashboard or any permitted page
-    //     Router.push('/admin')
-    //   } else {
-    //     localStorage.setItem(process.env.TOKEN_KEY,'n/a')
-    //     // localStorage.removeItem('currentUserId')
-    //     // notification for error
-    //     this.showErrorMsg(response.data.msg)
-    //   }
-    // })
+    })
   }
 
   render() {
@@ -88,7 +96,7 @@ class ForgetPassword extends React.Component {
               text={message}
               type={type}
               callback={this.flashMessageCallback}
-            >Children Text
+            >{message}
             </FlashMessage>
           }
           <TextField
@@ -104,11 +112,6 @@ class ForgetPassword extends React.Component {
             text="Reset your password"
             onClick={this.handleSubmit}
           />
-          { this.state.loginResult &&
-            <div>
-              <b style={{color:"red"}}>{this.state.loginResult}</b>
-            </div>
-          }
           <div>
             <Link href="/signup">
               <a>Create new account</a>
