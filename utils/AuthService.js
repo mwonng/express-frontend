@@ -30,6 +30,16 @@ export default class AuthService {
     })
   }
 
+  async resetPasswordTokenVerify(token) {
+    let requestObj = {token}
+    // axios.defaults.headers.common['Authorization'] = this.getToken();
+    return axios({
+      method: 'post',
+      url: `${ENDPOINT}auth/verifyResetToken/`,
+      data: requestObj
+    })
+  }
+
   loggedIn(){
     // Checks if there is a saved token and it's still valid
     const token = this.getToken()

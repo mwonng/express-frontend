@@ -1,4 +1,3 @@
-import React, { Component } from 'react';
 import styled from 'styled-components'
 
 const StyledContainer = styled.div`
@@ -9,7 +8,7 @@ const StyledContainer = styled.div`
 
 const container = WrappedComponent => {
   // console.log('simpleHoc');
-  return class extends Component {
+  return class Inheritance extends WrappedComponent {
     render() {
       return (
         <StyledContainer>
