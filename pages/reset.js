@@ -7,7 +7,7 @@ import Button from '../components/form-components/Button';
 import withContainer from '../components/layouts/Container';
 import FlashMessage from '../components/form-components/FlashMessage';
 import withFlashMessage from '../components/layouts/withFlashMessage';
-
+import styled from 'styled-components';
 
 const ENDPOINT = process.env.NODE_ENV === 'production'?process.env.ENDPOINT:process.env.DEV_END_POINT
 const Auth = new AuthService(ENDPOINT)
@@ -17,6 +17,11 @@ const addToLocalStorage = (key,token) => {
   localStorage.setItem(key, token)
   sessionStorage.setItem(key, token)
 }
+
+const HeadingOne = styled.h1`
+  text-align: center;
+`
+
 
 @withContainer
 @withFlashMessage
@@ -114,7 +119,7 @@ class Reset extends React.Component {
     }
     return (
       <div>
-        <h1>Reset Password</h1>
+        <HeadingOne>Reset Password</HeadingOne>
         <Panel title="Sign up">
           {
             showFlashMessage &&

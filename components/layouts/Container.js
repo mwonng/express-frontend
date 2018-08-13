@@ -3,7 +3,8 @@ import styled from 'styled-components'
 const StyledContainer = styled.div`
     margin: 0 auto;
     padding: 2rem;
-    width: 1280px;
+    max-width: 1280px;
+    width: 100%;
 `
 
 const container = WrappedComponent => {

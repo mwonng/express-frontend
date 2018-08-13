@@ -6,7 +6,8 @@ const PanelWrapper = styled.div`
   margin: 0 auto;
   padding: 2rem;
   border: 1px #ccc solid;
-  width: 100%;
+  min-width: 320px;
+  width: 40%;
 `
 
 const Panel = (props) => {

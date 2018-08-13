@@ -11,6 +11,7 @@ const TextFieldTheme = {
 
 const StyledInput = styled.input`
   display: block;
+  width: 100%;
   border-radius: 4px;
   font-size: 1rem;
   color: #666;
