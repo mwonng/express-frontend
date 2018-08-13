@@ -101,11 +101,21 @@ class Signup extends React.Component {
             })
           }
         })
+    } else {
+      console.log("Look here")
+      this.setState({
+        showFlashMessage: true,
+        flashMessage: {
+          type: 'error',
+          message: 'Password not matched, please retry.'
+        }
+      })
     }
   }
 
   render() {
     const { showFlashMessage, flashMessage } = this.state;
+    const { type, message } = this.state.flashMessage;
     if (this.state.isLoading) {
       return (
         <div> Loading ...</div>
@@ -117,9 +127,8 @@ class Signup extends React.Component {
         <Panel title="Sign up">
           { showFlashMessage &&
             <FlashMessage
-              // text={message}
-              // type={type}
-              // duration='3000'
+              text={message}
+              type={type}
               callback={this.flashMessageCallback}
             >{flashMessage.message}
             </FlashMessage>
