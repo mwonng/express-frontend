@@ -14,7 +14,6 @@ const Panel = (props) => {
   return (
     <div>
       <PanelWrapper>
-        <h3>{title}</h3>
         {props.children}
       </PanelWrapper>
     </div>

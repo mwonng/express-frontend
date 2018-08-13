@@ -5,6 +5,8 @@ import TextField from '../components/form-components/TextField';
 import Button from '../components/form-components/Button';
 import Link from 'next/link'
 import withContainer from '../components/layouts/Container'
+import FlashMessage from '../components/form-components/FlashMessage';
+import withFlashMessage from '../components/layouts/withFlashMessage'
 
 const ENDPOINT = process.env.NODE_ENV === 'production'?process.env.ENDPOINT:process.env.DEV_END_POINT
 const Auth = new AuthService(ENDPOINT)
@@ -15,12 +17,14 @@ const addToLocalStorage = (key,token) => {
 }
 
 @withContainer
+@withFlashMessage
 class Login extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       email: "",
       password: "",
+      flashMessage:"",
       loginResult: ""
     }
     this.hideErr = this.hideErr.bind(this)
@@ -65,6 +69,13 @@ class Login extends React.Component {
         Router.push('/admin')
       } else {
         localStorage.setItem(process.env.TOKEN_KEY,'n/a')
+        this.setState({
+          showFlashMessage: true,
+          flashMessage:{
+            type: 'error',
+            message: response.data.msg
+          }
+        });
         // localStorage.removeItem('currentUserId')
         // notification for error
         this.showErrorMsg(response.data.msg)
@@ -73,10 +84,20 @@ class Login extends React.Component {
   }
 
   render() {
+    const { showFlashMessage, flashMessage } = this.state;
     return (
       <div>
         <h1>Sign in</h1>
         <Panel title="Sign In" >
+          { showFlashMessage &&
+            <FlashMessage
+              // text={message}
+              // type={type}
+              // duration='3000'
+              callback={this.flashMessageCallback}
+            >{flashMessage.message}
+            </FlashMessage>
+          }
           <TextField
             id="email"
             label="Email"
@@ -100,11 +121,6 @@ class Login extends React.Component {
             text="Submit"
             onClick={this.handleSubmit}
           />
-          { this.state.loginResult &&
-            <div>
-              <b style={{color:"red"}}>{this.state.loginResult}</b>
-            </div>
-          }
           <div>
             <Link href="/signup">
               <a>Sign up</a>

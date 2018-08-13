@@ -5,7 +5,11 @@ const withFlashMessage = WrappedComponent => {
       super(props);
       this.state = {
         ...this.state,
-        showFlashMessage: false
+        showFlashMessage: false,
+        flashMessage: {
+          type:'error',
+          message: ''
+        }
       };
       this.isFlashMsgVisible = false;
       this.flashMessageCallback = this.flashMessageCallback.bind(this);

@@ -6,6 +6,10 @@ import TextField from '../components/form-components/TextField';
 import Button from '../components/form-components/Button';
 import Link from 'next/link'
 import withContainer from '../components/layouts/Container'
+import FlashMessage from '../components/form-components/FlashMessage';
+import withFlashMessage from '../components/layouts/withFlashMessage'
+
+
 const ENDPOINT = process.env.NODE_ENV === 'production'?process.env.ENDPOINT:process.env.DEV_END_POINT
 const Auth = new AuthService(ENDPOINT)
 const UserAction = new UserService(ENDPOINT)
@@ -18,13 +22,13 @@ const addToLocalStorage = (key,token) => {
 }
 
 @withContainer
+@withFlashMessage
 class Signup extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       email: "",
       password: "",
-      loginResult: "",
       isLoading: true,
       isLogin: false,
       valid: true
@@ -72,25 +76,14 @@ class Signup extends React.Component {
     return this.state.password === this.state.passwordConfirm
   }
 
-  showErrorMsg(errorMsg) {
-    clearTimeout()
-    this.setState({loginResult: errorMsg})
-  }
-
-  hideErr() {
-    //your function
-    this.setState({loginResult: ""})
-  }
-
   handleChange = (event) => {
     event.preventDefault()
-    this.setState({[event.target.id]: event.target.value}, ()=>console.log("signup state->", this.state))
+    this.setState({[event.target.id]: event.target.value})
   }
 
   handleSubmit = () => {
     let formObj = this.state
     if (this.isValidForNextSetp()) {
-      console.log(this.isMatched())
       UserAction.createUser(formObj.email, formObj.password)
         .then(response => {
           if (response.data.success) {
@@ -99,14 +92,20 @@ class Signup extends React.Component {
             Router.push('/admin')
           } else {
             localStorage.setItem(process.env.TOKEN_KEY,'n/a')
-            // notification for error
-            this.showErrorMsg(response.data.msg)
+            this.setState({
+              showFlashMessage: true,
+              flashMessage: {
+                type: 'error',
+                message: response.data.msg
+              }
+            })
           }
         })
     }
   }
 
   render() {
+    const { showFlashMessage, flashMessage } = this.state;
     if (this.state.isLoading) {
       return (
         <div> Loading ...</div>
@@ -114,8 +113,17 @@ class Signup extends React.Component {
     }
     return (
       <div>
-        <h1>Sign up </h1>
+        <h1>Sign up</h1>
         <Panel title="Sign up">
+          { showFlashMessage &&
+            <FlashMessage
+              // text={message}
+              // type={type}
+              // duration='3000'
+              callback={this.flashMessageCallback}
+            >{flashMessage.message}
+            </FlashMessage>
+          }
           <TextField
               id="email"
               label="Email"
@@ -149,11 +157,6 @@ class Signup extends React.Component {
             text="Submit"
             onClick={this.handleSubmit}
           />
-          { this.state.loginResult &&
-            <div>
-              <b style={{color:"red"}}>{this.state.loginResult}</b>
-            </div>
-          }
           <div>
             <Link href="/signin">
               <a>Sign in</a>

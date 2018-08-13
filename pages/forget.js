@@ -3,9 +3,9 @@ import AuthService from '../utils/AuthService'
 import Router from 'next/router'
 import TextField from '../components/form-components/TextField';
 import Button from '../components/form-components/Button';
-import FlashMessage from '../components/form-components/FlashMessage';
 import Link from 'next/link'
 import withContainer from '../components/layouts/Container'
+import FlashMessage from '../components/form-components/FlashMessage';
 import withFlashMessage from '../components/layouts/withFlashMessage'
 
 const ENDPOINT = process.env.NODE_ENV === 'production'?process.env.ENDPOINT:process.env.DEV_END_POINT
@@ -22,8 +22,6 @@ class ForgetPassword extends React.Component {
     super(props)
     this.state = {
       email: "",
-      currentMessage: {
-      },
     }
     this.hideErr = this.hideErr.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -57,7 +55,7 @@ class ForgetPassword extends React.Component {
     let {email} = this.state;
     this.setState({
       showFlashMessage: true,
-      currentMessage:{
+      flashMessage:{
         type: 'success',
         message: 'Show me the momeny111'
       }
@@ -80,16 +78,15 @@ class ForgetPassword extends React.Component {
 
   render() {
     const { showFlashMessage } = this.state;
-    const { type, message } = this.state.currentMessage;
+    const { type, message } = this.state.flashMessage;
     return (
       <div>
         <h1>Forget your password?</h1>
         <Panel title="Sign In" >
           { showFlashMessage &&
             <FlashMessage
-              // text={message}
-              // type={type}
-              // duration='3000'
+              text={message}
+              type={type}
               callback={this.flashMessageCallback}
             >Children Text
             </FlashMessage>
