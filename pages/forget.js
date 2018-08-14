@@ -7,6 +7,7 @@ import Link from 'next/link'
 import withContainer from '../components/layouts/Container'
 import FlashMessage from '../components/form-components/FlashMessage';
 import withFlashMessage from '../components/layouts/withFlashMessage'
+import {OneColumnMid} from '../components/layouts/Grids';
 
 const ENDPOINT = process.env.NODE_ENV === 'production'?process.env.ENDPOINT:process.env.DEV_END_POINT
 
@@ -89,40 +90,42 @@ class ForgetPassword extends React.Component {
     const { type, message } = this.state.flashMessage;
     return (
       <div>
-        <h1>Forget your password?</h1>
-        <Panel title="Sign In" >
-          { showFlashMessage &&
-            <FlashMessage
-              text={message}
-              type={type}
-              callback={this.flashMessageCallback}
-            >{message}
-            </FlashMessage>
-          }
-          <TextField
-            id="email"
-            label="Your email"
-            class="email"
-            disable={true}
-            onChange={this.handleChange}
-            onFocus={this.hideErr}
-          />
-          <Button
-            color="#5EBBB3"
-            text="Reset your password"
-            onClick={this.handleSubmit}
-          />
-          <div>
-            <Link href="/signup">
-              <a>Create new account</a>
-            </Link>
-          </div>
-          <div>
-            <Link href="/signin">
-              <a>Already have one</a>
-            </Link>
-          </div>
-        </Panel>
+        <OneColumnMid>
+          <h1>Forget your password?</h1>
+          <Panel title="Sign In" >
+            { showFlashMessage &&
+              <FlashMessage
+                text={message}
+                type={type}
+                callback={this.flashMessageCallback}
+              >{message}
+              </FlashMessage>
+            }
+            <TextField
+              id="email"
+              label="Your email"
+              class="email"
+              disable={true}
+              onChange={this.handleChange}
+              onFocus={this.hideErr}
+            />
+            <Button
+              color="#5EBBB3"
+              text="Reset your password"
+              onClick={this.handleSubmit}
+            />
+            <div>
+              <Link href="/signup">
+                <a>Create new account</a>
+              </Link>
+            </div>
+            <div>
+              <Link href="/signin">
+                <a>Already have one</a>
+              </Link>
+            </div>
+          </Panel>
+        </OneColumnMid>
       </div>
     );
   }

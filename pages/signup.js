@@ -8,7 +8,7 @@ import Link from 'next/link'
 import withContainer from '../components/layouts/Container'
 import FlashMessage from '../components/form-components/FlashMessage';
 import withFlashMessage from '../components/layouts/withFlashMessage'
-
+import {OneColumnMid} from '../components/layouts/Grids';
 
 const ENDPOINT = process.env.NODE_ENV === 'production'?process.env.ENDPOINT:process.env.DEV_END_POINT
 const Auth = new AuthService(ENDPOINT)
@@ -123,55 +123,57 @@ class Signup extends React.Component {
     }
     return (
       <div>
-        <h1>Sign up</h1>
-        <Panel title="Sign up">
-          { showFlashMessage &&
-            <FlashMessage
-              text={message}
-              type={type}
-              callback={this.flashMessageCallback}
-            >{flashMessage.message}
-            </FlashMessage>
-          }
-          <TextField
-              id="email"
-              label="Email"
-              class="email"
+        <OneColumnMid>
+          <h1>Sign up</h1>
+          <Panel title="Sign up">
+            { showFlashMessage &&
+              <FlashMessage
+                text={message}
+                type={type}
+                callback={this.flashMessageCallback}
+              >{flashMessage.message}
+              </FlashMessage>
+            }
+            <TextField
+                id="email"
+                label="Email"
+                class="email"
+                disable={true}
+                onChange={this.handleChange}
+                validate={this.validateEmail}
+            />
+            <TextField
+              class="password"
+              disable={true}
+              id="password"
+              label="Password"
+              onChange={this.handleChange}
+              onKeyPressEnter={this.handleSubmit}
+              validate={this.validatePassword}
+              password
+            />
+            <TextField
+              id="passwordConfirm"
+              label="Confirm Password"
+              class="password"
               disable={true}
               onChange={this.handleChange}
-              validate={this.validateEmail}
-          />
-          <TextField
-            class="password"
-            disable={true}
-            id="password"
-            label="Password"
-            onChange={this.handleChange}
-            onKeyPressEnter={this.handleSubmit}
-            validate={this.validatePassword}
-            password
-          />
-          <TextField
-            id="passwordConfirm"
-            label="Confirm Password"
-            class="password"
-            disable={true}
-            onChange={this.handleChange}
-            onKeyPressEnter={this.handleSubmit}
-            isMatch={this.state.password === this.state.passwordConfirm}
-            password
-          />
-          <Button
-            color="#5EBBB3"
-            text="Submit"
-            onClick={this.handleSubmit}
-          />
-          <div>
-            <Link href="/signin">
-              <a>Sign in</a>
-            </Link>
-          </div>
-        </Panel>
+              onKeyPressEnter={this.handleSubmit}
+              isMatch={this.state.password === this.state.passwordConfirm}
+              password
+            />
+            <Button
+              color="#5EBBB3"
+              text="Submit"
+              onClick={this.handleSubmit}
+            />
+            <div>
+              <Link href="/signin">
+                <a>Sign in</a>
+              </Link>
+            </div>
+          </Panel>
+        </OneColumnMid>
       </div>
     );
   }

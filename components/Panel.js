@@ -3,11 +3,9 @@ import TextField from './form-components/TextField';
 import Button from './form-components/Button';
 
 const PanelWrapper = styled.div`
-  margin: 0 auto;
-  padding: 2rem;
-  border: 1px #ccc solid;
-  min-width: 320px;
-  width: 40%;
+  margin : 0 auto;
+  padding: 3rem;
+  border : 1px #ccc solid;
 `
 
 const Panel = (props) => {

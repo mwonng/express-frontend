@@ -7,6 +7,7 @@ import Link from 'next/link'
 import withContainer from '../components/layouts/Container'
 import FlashMessage from '../components/form-components/FlashMessage';
 import withFlashMessage from '../components/layouts/withFlashMessage'
+import {OneColumnMid} from '../components/layouts/Grids';
 
 const ENDPOINT = process.env.NODE_ENV === 'production'?process.env.ENDPOINT:process.env.DEV_END_POINT
 const Auth = new AuthService(ENDPOINT)
@@ -87,51 +88,53 @@ class Login extends React.Component {
     const { showFlashMessage, flashMessage } = this.state;
     return (
       <div>
-        <h1>Sign in</h1>
-        <Panel title="Sign In" >
-          { showFlashMessage &&
-            <FlashMessage
-              // text={message}
-              // type={type}
-              // duration='3000'
-              callback={this.flashMessageCallback}
-            >{flashMessage.message}
-            </FlashMessage>
-          }
-          <TextField
-            id="email"
-            label="Email"
-            class="email"
-            disable={true}
-            onChange={this.handleChange}
-            onFocus={this.hideErr}
-          />
-          <TextField
-            id="password"
-            label="Password"
-            class="password"
-            password
-            disable={true}
-            onChange={this.handleChange}
-            onKeyPressEnter={this.handleSubmit}
-            onFocus={this.hideErr}
-          />
-          <Button
-            color="#5EBBB3"
-            text="Submit"
-            onClick={this.handleSubmit}
-          />
-          <div>
-            <Link href="/signup">
-              <a>Sign up</a>
-            </Link>
-          </div>
-          <div>
-            <Link href="/forget">
-              <a>Forget password?</a>
-            </Link>
-          </div>
-        </Panel>
+        <OneColumnMid>
+          <h1>Sign in</h1>
+          <Panel title="Sign In" >
+            { showFlashMessage &&
+              <FlashMessage
+                text={message}
+                type={type}
+                callback={this.flashMessageCallback}
+              >{flashMessage.message}
+              </FlashMessage>
+            }
+            <TextField
+              id="email"
+              label="Email"
+              class="email"
+              disable={true}
+              onChange={this.handleChange}
+              onFocus={this.hideErr}
+            />
+            <TextField
+              id="password"
+              label="Password"
+              class="password"
+              password
+              disable={true}
+              onChange={this.handleChange}
+              onKeyPressEnter={this.handleSubmit}
+              onFocus={this.hideErr}
+            />
+            <Button
+              color="#5EBBB3"
+              text="Submit"
+              onClick={this.handleSubmit}
+            />
+            <div>
+              <Link href="/signup">
+                <a>Sign up</a>
+              </Link>
+            </div>
+            <div>
+              <Link href="/forget">
+                <a>Forget password?</a>
+              </Link>
+            </div>
+          </Panel>
+        </OneColumnMid>
+
       </div>
     );
   }
