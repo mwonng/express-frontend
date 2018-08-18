@@ -21,7 +21,7 @@ export default class UserService {
   }
 
   resetPassword(token, password) {
-    let requestObj = {token,}
+    let requestObj = {token,password}
     return axios({
       method: 'post',
       url: `${ENDPOINT}auth/resetPassword`,
