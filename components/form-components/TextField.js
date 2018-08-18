@@ -104,6 +104,7 @@ class TextField extends React.Component{
           onKeyPress={this._handleKeyPress}
           onFocus={this._onFocus}
           isValidate={this.state.isValidate}
+          value={this.props.value}
           >
         </StyledInput>
       </InputWrapper>

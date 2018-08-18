@@ -79,13 +79,14 @@ class Login extends React.Component {
         });
         // localStorage.removeItem('currentUserId')
         // notification for error
-        this.showErrorMsg(response.data.msg)
+        // this.showErrorMsg(response.data.msg)
       }
     })
   }
 
   render() {
     const { showFlashMessage, flashMessage } = this.state;
+    const { type, message } = this.state.flashMessage;
     return (
       <div>
         <OneColumnMid>

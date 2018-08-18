@@ -20,6 +20,21 @@ export default class UserService {
     })
   }
 
+  resetPassword(token, password) {
+    let requestObj = {token,}
+    return axios({
+      method: 'post',
+      url: `${ENDPOINT}auth/resetPassword`,
+      data: requestObj
+    })
+
+    // verify token
+
+    // if verified, decode email from token
+
+    // update password
+  }
+
   deleteUser() {
 
   }

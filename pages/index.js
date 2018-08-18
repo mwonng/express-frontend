@@ -6,7 +6,8 @@ const Auth = new AuthService(FRONT_ENDPOINT)
 import Link from 'next/link'
 import fetch from 'isomorphic-fetch';
 import axios from 'axios'
-import withContainer from '../components/layouts/Container'
+import withContainer from '../components/layouts/Container';
+import Head from 'next/head';
 
 axios.defaults.headers.common['Authorization'] = "LOOKINGATME!!";
 @withContainer
@@ -31,6 +32,9 @@ class Index extends React.Component {
   render() {
     return(
       <div>
+        <Head>
+          <title>Weyou Login</title>
+        </Head>
         <h1>Homepage</h1>
         <p>Hello World</p>
         <div>
