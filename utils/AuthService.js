@@ -15,7 +15,7 @@ export default class AuthService {
     axios.defaults.headers.common['Authorization'] = this.getToken();
     return axios({
       method: 'post',
-      url: `${ENDPOINT}auth/`,
+      url: `${ENDPOINT}/auth/signin`,
       data: requestObj
     })
   }
@@ -25,7 +25,7 @@ export default class AuthService {
     // axios.defaults.headers.common['Authorization'] = this.getToken();
     return axios({
       method: 'post',
-      url: `${ENDPOINT}auth/forget/`,
+      url: `${ENDPOINT}/auth/forget/`,
       data: requestObj
     })
   }
@@ -35,7 +35,7 @@ export default class AuthService {
     // axios.defaults.headers.common['Authorization'] = this.getToken();
     return axios({
       method: 'post',
-      url: `${ENDPOINT}auth/verifyResetToken/`,
+      url: `${ENDPOINT}/auth/verifyResetToken/`,
       data: requestObj
     })
   }
@@ -63,7 +63,7 @@ export default class AuthService {
     axios.defaults.headers.common['Authorization'] =  localStorage.getItem(process.env.TOKEN_KEY);
     return axios({
       method: 'post',
-      url: `${ENDPOINT}auth/token`,
+      url: `${ENDPOINT}/auth/verifySigninToken`,
       data: {
         token: localStorage.getItem(process.env.TOKEN_KEY)
         // token: token

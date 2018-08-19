@@ -15,7 +15,7 @@ export default class UserService {
     // axios.defaults.headers.common['Authorization'] = this.getToken();
     return axios({
       method: 'post',
-      url: `${ENDPOINT}auth/signup`,
+      url: `${ENDPOINT}/auth/signup`,
       data: requestObj
     })
   }
@@ -24,7 +24,7 @@ export default class UserService {
     let requestObj = {token,password}
     return axios({
       method: 'post',
-      url: `${ENDPOINT}auth/resetPassword`,
+      url: `${ENDPOINT}/auth/resetPassword`,
       data: requestObj
     })
 
