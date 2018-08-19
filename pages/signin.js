@@ -28,7 +28,6 @@ class Login extends React.Component {
       flashMessage:"",
       loginResult: ""
     }
-    this.hideErr = this.hideErr.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
@@ -37,21 +36,10 @@ class Login extends React.Component {
   }
 
   componentDidMount() {
-    // if (this.props.query.error) {
-    //   this.setState({loginResult: this.props.query.error })
-    // }
+
   }
 
   componentWillUnmount() {
-  }
-
-  showErrorMsg(errorMsg) {
-    this.setState({loginResult: errorMsg})
-  }
-
-  hideErr() {
-      //your function
-      this.setState({loginResult: ""})
   }
 
   handleChange = (event) => {
@@ -65,8 +53,6 @@ class Login extends React.Component {
     .then(response => {
       if (response.data.success) {
         addToLocalStorage(process.env.TOKEN_KEY, response.data.token)
-        // addToLocalStorage('currentUserId', response.data.currentUser._id)
-        // this can be dashboard or any permitted page
         Router.push('/admin')
       } else {
         localStorage.setItem(process.env.TOKEN_KEY,'n/a')
@@ -77,9 +63,6 @@ class Login extends React.Component {
             message: response.data.msg
           }
         });
-        // localStorage.removeItem('currentUserId')
-        // notification for error
-        // this.showErrorMsg(response.data.msg)
       }
     })
   }
