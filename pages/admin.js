@@ -3,12 +3,14 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import Router from 'next/router'
 import AuthService from '../utils/AuthService'
+import UserAction from '../utils/UserService'
 import Button from '../components/form-components/Button'
 import jwt from 'jsonwebtoken'
 import withContainer from '../components/layouts/Container'
 const ENDPOINT = process.env.NODE_ENV === 'production'?process.env.ENDPOINT:process.env.DEV_END_POINT
 
 const Auth = new AuthService(ENDPOINT)
+const User = new UserAction()
 const UserContext = React.createContext();
 @withContainer
 class Admin extends Component {
@@ -63,6 +65,20 @@ class Admin extends Component {
     Router.push('/signin')
   }
 
+  archiveAccount() {
+    const token = localStorage.getItem(process.env.TOKEN_KEY);
+    User.archiveUser(token)
+      .then( response => {
+        if (response.data.success) {
+          Auth.logout()
+          Router.push('/')
+        }
+      })
+      .catch( err => {
+        throw err;
+      });
+  }
+
   getCurrentUserId() {
     let decode = jwt.decode(localStorage.getItem('auth_jwt'))
     return decode.data.currentUser
@@ -89,6 +105,13 @@ class Admin extends Component {
               onClick={this.logout}
               text="Sign out"
             />
+            <div>
+              <Button
+                color="red"
+                onClick={this.archiveAccount}
+                text="Archive my account"
+              />
+            </div>
           </div>
         </UserContext.Provider>
       );

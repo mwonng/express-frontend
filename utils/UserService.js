@@ -35,8 +35,13 @@ export default class UserService {
     // update password
   }
 
-  deleteUser() {
-
+  archiveUser(token) {
+    let requestObj = {token}
+    return axios({
+      method: 'post',
+      url: `${ENDPOINT}/auth/archiveUser`,
+      data: requestObj
+    })
   }
 
   updateUser() {
