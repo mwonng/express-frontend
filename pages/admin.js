@@ -79,14 +79,14 @@ class Admin extends Component {
       });
   }
 
-  getCurrentUserId() {
-    let decode = jwt.decode(localStorage.getItem('auth_jwt'))
-    return decode.data.currentUser
-  }
+  // getCurrentUserId() {
+  //   let decode = jwt.decode(localStorage.getItem(process.env.TOKEN_KEY))
+  //   return decode.data.currentUser
+  // }
 
-  getCurrentUser(user) {
-    return user
-  }
+  // getCurrentUser(user) {
+  //   return user
+  // }
 
   render() {
     if (this.state.isLoading) {
@@ -101,13 +101,13 @@ class Admin extends Component {
             <h1>Admin page</h1>
             <UserArea />
             <Button
-              color="red"
+              color="teal"
               onClick={this.logout}
               text="Sign out"
             />
             <div>
               <Button
-                color="red"
+                color="darkred"
                 onClick={this.archiveAccount}
                 text="Archive my account"
               />
