@@ -4,12 +4,9 @@ import AuthService from '../utils/AuthService'
 const FRONT_ENDPOINT = process.env.NODE_ENV === 'production'?process.env.FRONT_ENDPOINT:process.env.DEV_FRONT_ENDPOINT
 const Auth = new AuthService(FRONT_ENDPOINT)
 import Link from 'next/link'
-import fetch from 'isomorphic-fetch';
-import axios from 'axios'
 import withContainer from '../components/layouts/Container';
 import Head from 'next/head';
 
-axios.defaults.headers.common['Authorization'] = "LOOKINGATME!!";
 @withContainer
 class Index extends React.Component {
   static async getInitialProps({ req,res }) {
@@ -48,6 +45,7 @@ class Index extends React.Component {
             <a>Create a new account</a>
           </Link>
         </div>
+        <p></p>
       </div>
     )
   }

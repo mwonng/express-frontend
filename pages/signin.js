@@ -8,14 +8,44 @@ import withContainer from '../components/layouts/Container'
 import FlashMessage from '../components/form-components/FlashMessage';
 import withFlashMessage from '../components/layouts/withFlashMessage'
 import {OneColumnMid} from '../components/layouts/Grids';
+import { GoogleLogin } from 'react-google-login';
+import styled from 'styled-components';
 
 const ENDPOINT = process.env.NODE_ENV === 'production'?process.env.ENDPOINT:process.env.DEV_END_POINT
 const Auth = new AuthService(ENDPOINT)
+
+const GoogleLoginWrapper = styled.div`
+  margin: 1rem 0;
+  & > button {
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+`
 
 const addToLocalStorage = (key,token) => {
   localStorage.setItem(key, token)
   sessionStorage.setItem(key, token)
 }
+
+const successResponseGoogle = async (response) => {
+  const {tokenId} = response
+  // console.log("success login ->",tokenId);
+  try {
+    const {data} = await Auth.verifyGoogleLogin(tokenId);
+    console.log("data->", data);
+  } catch (err) {
+    console.log("err->", err);
+    throw err
+  }
+  // need assign token and save into localStorage
+}
+
+const failResponseGoogle = (response) => {
+  console.log("fail login",response);
+}
+
 
 @withContainer
 @withFlashMessage
@@ -116,9 +146,16 @@ class Login extends React.Component {
                 <a>Forget password?</a>
               </Link>
             </div>
+            <GoogleLoginWrapper>
+              <GoogleLogin
+                clientId="1023874746413-mgm9p2cl704jkcfd7k6q7n8m5medn0sa.apps.googleusercontent.com"
+                buttonText="Login via Google"
+                onSuccess={successResponseGoogle}
+                onFailure={failResponseGoogle}
+              />
+            </GoogleLoginWrapper>
           </Panel>
         </OneColumnMid>
-
       </div>
     );
   }

@@ -31,6 +31,7 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "babel-register": "^6.26.0",
-    "polished": "^1.9.3"
+    "polished": "^1.9.3",
+    "react-google-login": "^3.2.1"
   }
 }

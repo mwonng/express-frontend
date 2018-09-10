@@ -10,6 +10,14 @@ export default class AuthService {
     this.getProfile = this.getProfile.bind(this)
   }
 
+  async verifyGoogleLogin(token) {
+    return axios({
+      method: 'post',
+      url: `${ENDPOINT}/auth/verifyExternalLogin`,
+      data: {token:token}
+    })
+  }
+
   async login(email, password) {
     let requestObj = {email, password}
     axios.defaults.headers.common['Authorization'] = this.getToken();
