@@ -1,22 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
-
+// import { GoogleLogin } from 'react-google-login';
+import AuthService from '../utils/AuthService'
+const Auth = new AuthService(ENDPOINT)
+const ENDPOINT = process.env.NODE_ENV === 'production'?process.env.ENDPOINT:process.env.DEV_END_POINT
 const GoogleSignIn = styled.div`
   margin: 1rem auto;
 `
 
-export default class extends React.Component {
-  static async getInitialProps({ req }) {
-    const userAgent = req ? req.headers['user-agent'] : navigator.userAgent
-    return { userAgent }
-  }
-
+class GoogleLogin extends React.Component {
   componentDidMount() {
-    const script = document.createElement("script");
-    script.src = "https://apis.google.com/js/platform.js";
-    script.async = true;
-    document.body.appendChild(script);
-
     gapi.signin2.render('g-signin2', {
 			'scope': 'profile email',
 			'width': 300,
@@ -64,3 +57,5 @@ export default class extends React.Component {
     )
   }
 }
+
+export default GoogleLogin

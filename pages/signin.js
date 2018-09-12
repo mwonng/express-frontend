@@ -8,8 +8,8 @@ import withContainer from '../components/layouts/Container'
 import FlashMessage from '../components/form-components/FlashMessage';
 import withFlashMessage from '../components/layouts/withFlashMessage'
 import {OneColumnMid} from '../components/layouts/Grids';
-import { GoogleLogin } from 'react-google-login';
 import styled from 'styled-components';
+import GoogleLogin from '../components/GoogleLogin';
 
 const ENDPOINT = process.env.NODE_ENV === 'production'?process.env.ENDPOINT:process.env.DEV_END_POINT
 const Auth = new AuthService(ENDPOINT)
@@ -23,30 +23,26 @@ const GoogleLoginWrapper = styled.div`
   }
 `
 
-const GoogleSignIn = styled.div`
-  margin: 1rem auto;
-`
-
 const addToLocalStorage = (key,token) => {
   localStorage.setItem(key, token)
   sessionStorage.setItem(key, token)
 }
 
-const successResponseGoogle = async (response) => {
-  const {tokenId} = response
-  try {
-    const {data} = await Auth.verifyGoogleLogin(tokenId);
-    console.log("data->", data);
-  } catch (err) {
-    console.log("err->", err);
-    throw err
-  }
-  // need assign token and save into localStorage
-}
+// const successResponseGoogle = async (response) => {
+//   const {tokenId} = response
+//   try {
+//     const {data} = await Auth.verifyGoogleLogin(tokenId);
+//     console.log("data->", data);
+//   } catch (err) {
+//     console.log("err->", err);
+//     throw err
+//   }
+//   // need assign token and save into localStorage
+// }
 
-const failResponseGoogle = (response) => {
-  console.log("fail login",response);
-}
+// const failResponseGoogle = (response) => {
+//   console.log("fail login",response);
+// }
 
 
 @withContainer
@@ -68,48 +64,9 @@ class Login extends React.Component {
   }
 
   componentDidMount() {
-    gapi.signin2.render('g-signin2', {
-			'scope': 'profile email',
-			'width': 300,
-			'height': 50,
-			'longtitle': true,
-			'theme': 'dark',
-      'onsuccess': this.onSignIn,
-      'onfailure': this.onFailure
-    });
-    // console.log("google user ->",googleUser)
   }
 
   componentWillUnmount() {
-  }
-
-  async onSignIn(googleUser) {
-    let profile = googleUser.getBasicProfile();
-    let id_token = googleUser.getAuthResponse().id_token;
-    try {
-      const {data} = await Auth.verifyGoogleLogin(id_token);
-      console.log("data->", data);
-    } catch (err) {
-      console.log("err->", err);
-      throw err
-    }
-    // console.log("profile", profile.getEmail());
-    // console.log("Id", profile.getId());
-    // console.log("id_token", googleUser.getAuthResponse().id_token);
-		// sessionStorage.setItem('authToken', profile.getId());
-		// sessionStorage.setItem('name', profile.getName());
-		// sessionStorage.setItem('imageUrl', profile.getImageUrl());
-		// sessionStorage.setItem('email', profile.getEmail());
-
-		// let account = this.props.cursor.refine('account');
-		// account.refine('authToken').set(sessionStorage.getItem('authToken'));
-		// account.refine('name').set(sessionStorage.getItem('name'));
-		// account.refine('imageUrl').set(sessionStorage.getItem('imageUrl'));
-		// account.refine('email').set(sessionStorage.getItem('email'));
-  }
-
-  onFailure(error) {
-    console.log(error);
   }
 
   handleChange = (event) => {
@@ -195,7 +152,7 @@ class Login extends React.Component {
                 <a>Forget password?</a>
               </Link>
             </div>
-            <GoogleSignIn id="g-signin2"/>
+            <GoogleLogin />
           </Panel>
         </OneColumnMid>
       </div>
