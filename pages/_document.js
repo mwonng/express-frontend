@@ -31,6 +31,9 @@ export default class MyDocument extends Document {
           {this.props.styleTags}
           <link rel="icon" type="image/x-icon" href="static/favicon.ico" />
           <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900" rel="stylesheet" />
+          <meta name="google-signin-scope" content="profile email" />
+          <meta name="google-signin-client_id" content="1023874746413-mgm9p2cl704jkcfd7k6q7n8m5medn0sa.apps.googleusercontent.com" />
+          <script src="https://apis.google.com/js/platform.js" async defer></script>
         </Head>
         <body>
           <Main />

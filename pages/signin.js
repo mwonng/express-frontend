@@ -17,11 +17,14 @@ const Auth = new AuthService(ENDPOINT)
 const GoogleLoginWrapper = styled.div`
   margin: 1rem 0;
   & > button {
-
     &:hover {
       cursor: pointer;
     }
   }
+`
+
+const GoogleSignIn = styled.div`
+  margin: 1rem auto;
 `
 
 const addToLocalStorage = (key,token) => {
@@ -31,7 +34,6 @@ const addToLocalStorage = (key,token) => {
 
 const successResponseGoogle = async (response) => {
   const {tokenId} = response
-  // console.log("success login ->",tokenId);
   try {
     const {data} = await Auth.verifyGoogleLogin(tokenId);
     console.log("data->", data);
@@ -58,7 +60,7 @@ class Login extends React.Component {
       flashMessage:"",
       loginResult: ""
     }
-    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   static async getInitialProps ({ query }) {
@@ -66,10 +68,48 @@ class Login extends React.Component {
   }
 
   componentDidMount() {
-
+    gapi.signin2.render('g-signin2', {
+			'scope': 'profile email',
+			'width': 300,
+			'height': 50,
+			'longtitle': true,
+			'theme': 'dark',
+      'onsuccess': this.onSignIn,
+      'onfailure': this.onFailure
+    });
+    // console.log("google user ->",googleUser)
   }
 
   componentWillUnmount() {
+  }
+
+  async onSignIn(googleUser) {
+    let profile = googleUser.getBasicProfile();
+    let id_token = googleUser.getAuthResponse().id_token;
+    try {
+      const {data} = await Auth.verifyGoogleLogin(id_token);
+      console.log("data->", data);
+    } catch (err) {
+      console.log("err->", err);
+      throw err
+    }
+    // console.log("profile", profile.getEmail());
+    // console.log("Id", profile.getId());
+    // console.log("id_token", googleUser.getAuthResponse().id_token);
+		// sessionStorage.setItem('authToken', profile.getId());
+		// sessionStorage.setItem('name', profile.getName());
+		// sessionStorage.setItem('imageUrl', profile.getImageUrl());
+		// sessionStorage.setItem('email', profile.getEmail());
+
+		// let account = this.props.cursor.refine('account');
+		// account.refine('authToken').set(sessionStorage.getItem('authToken'));
+		// account.refine('name').set(sessionStorage.getItem('name'));
+		// account.refine('imageUrl').set(sessionStorage.getItem('imageUrl'));
+		// account.refine('email').set(sessionStorage.getItem('email'));
+  }
+
+  onFailure(error) {
+    console.log(error);
   }
 
   handleChange = (event) => {
@@ -94,6 +134,15 @@ class Login extends React.Component {
           }
         });
       }
+    })
+    .catch(err=> {
+      this.setState({
+        showFlashMessage: true,
+        flashMessage:{
+          type: 'error',
+          message: err,
+        }
+      });
     })
   }
 
@@ -146,14 +195,7 @@ class Login extends React.Component {
                 <a>Forget password?</a>
               </Link>
             </div>
-            <GoogleLoginWrapper>
-              <GoogleLogin
-                clientId="1023874746413-mgm9p2cl704jkcfd7k6q7n8m5medn0sa.apps.googleusercontent.com"
-                buttonText="Login via Google"
-                onSuccess={successResponseGoogle}
-                onFailure={failResponseGoogle}
-              />
-            </GoogleLoginWrapper>
+            <GoogleSignIn id="g-signin2"/>
           </Panel>
         </OneColumnMid>
       </div>
