@@ -11,31 +11,31 @@ This project is designed for login with React frontend. Now it works with anothe
 ## Routes:
 
 ### Signup:
-Method: post
-Endpoint: ENDPOINT/auth/signup
-Body: {email, password}
+- Method: `post`
+- Endpoint: `ENDPOINT/auth/signup`
+- Body: `{email, password}`
 
 ### Signin:
-Method: post
-Endpoint: ENDPOINT/auth/siginin
-Body: {email, password}
+- Method: `post`
+- Endpoint: `ENDPOINT/auth/siginin`
+- Body: `{email, password}`
 
 ### Verify token:
-Method: post
-Endpoint: ENDPOINT/auth/verifyResetToken
-Body: {token}
+- Method: `post`
+- Endpoint: `ENDPOINT/auth/verifyResetToken`
+- Body: `{token}`
 
 ### Forget Password:
-Method: post
-Endpoint: ENDPOINT/auth/forget
-Body: {email}
+- Method: `post`
+- Endpoint: `ENDPOINT/auth/forget`
+- Body: `{email}`
 
 ### Reset Password:
-Method: post
-Endpoint: ENDPOINT/auth/resetPassword
-Body: {token, password}
+- Method: `post`
+- Endpoint: `ENDPOINT/auth/resetPassword`
+- Body: `{token, password}`
 
 ### Archive User:
-Method: post
-Endpoint: ENDPOINT/auth/archiveUser
-Body: {token}
+- Method: `post`
+- Endpoint: `ENDPOINT/auth/archiveUser`
+- Body: `{token}`
