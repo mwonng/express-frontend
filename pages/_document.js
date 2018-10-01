@@ -27,7 +27,6 @@ export default class MyDocument extends Document {
     return (
       <html>
         <Head>
-          <title>Front End</title>
           {this.props.styleTags}
           <link rel="icon" type="image/x-icon" href="static/favicon.ico" />
           <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900" rel="stylesheet" />
